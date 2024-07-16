@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Deep Learning Basics | Ler&#39;Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="In this post, we mention some important concepts in deep learning, including
+artificial neural network automatic differentiation Monte Carlo estimation minibatch stochastic gradient descent. Given the extensive nature of each subsection, a comprehensive coverage is beyond the scope. Instead, we will pick certain subjects, explain some important ideas and theorems that support these mechanisms, and provide a simple example as demonstration.
+# Standard PyTorch import import torch import torch.nn as nn import numpy as np import random import matplotlib.">
+<meta name="author" content="">
+<link rel="canonical" href="//localhost:1313/posts/basics/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="//localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="//localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="//localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="//localhost:1313/posts/basics/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+    <script>
+    MathJax = {
+      loader: {
+        load: ['[tex]/autoload']
+      },
+      tex: {
+        inlineMath: [ ['$', '$'], ['\(', '\)'] ],
+        displayMath: [['$$','$$'], ['\\(', '\\)']],
+        packages: {'[+]': ['autoload']}
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+<script
+    type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+ 
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="//localhost:1313/" accesskey="h" title="Ler&#39;Blog (Alt + H)">Ler&#39;Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="//localhost:1313/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="//localhost:1313/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="//localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Deep Learning Basics
+    </h1>
+    <div class="post-meta"><span title='2024-02-01 10:20:33 +0800 CST'>February 1, 2024</span>&nbsp;·&nbsp;9 min
+
+</div>
+  </header> 
+  <div class="post-content"><p>In this post, we mention some important concepts in deep learning, including</p>
+<ul>
+<li>artificial neural network</li>
+<li>automatic differentiation</li>
+<li>Monte Carlo estimation</li>
+<li>minibatch stochastic gradient descent.</li>
+</ul>
+<p>Given the extensive nature of each subsection, a comprehensive coverage is beyond the scope. Instead, we will pick certain subjects, explain some important ideas and theorems that support these mechanisms, and provide a simple example as demonstration.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Standard PyTorch import</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> make_circles
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Set seed</span>
+</span></span><span style="display:flex;"><span>SEED <span style="color:#f92672">=</span> <span style="color:#ae81ff">2024</span> 
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>backends<span style="color:#f92672">.</span>cudnn<span style="color:#f92672">.</span>deterministic <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>backends<span style="color:#f92672">.</span>cudnn<span style="color:#f92672">.</span>benchmark <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>manual_seed(SEED)
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>manual_seed_all(SEED)
+</span></span><span style="display:flex;"><span>random<span style="color:#f92672">.</span>seed(SEED)
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(SEED)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate dataset</span>
+</span></span><span style="display:flex;"><span>X, y <span style="color:#f92672">=</span> X, y <span style="color:#f92672">=</span> make_circles(<span style="color:#ae81ff">1000</span>,
+</span></span><span style="display:flex;"><span>                    noise<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>, 
+</span></span><span style="display:flex;"><span>                    random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">42</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot dataset</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(x<span style="color:#f92672">=</span>X[:,<span style="color:#ae81ff">0</span>],y<span style="color:#f92672">=</span>X[:,<span style="color:#ae81ff">1</span>], marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;o&#34;</span>, c<span style="color:#f92672">=</span>y, s<span style="color:#f92672">=</span><span style="color:#ae81ff">25</span>)
+</span></span></code></pre></div><pre><code>&lt;matplotlib.collections.PathCollection at 0x7f48510f9bb0&gt;
+</code></pre>
+<p><img loading="lazy" src="https://levi0206.github.io/lerblog/basics/Basics_1_1.png" alt="png"  />
+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Check shape of tensor</span>
+</span></span><span style="display:flex;"><span>X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>Tensor(X)
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>Tensor(y)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;X shape:&#34;</span>,X<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;y shape:&#34;</span>,y<span style="color:#f92672">.</span>shape)
+</span></span></code></pre></div><pre><code>X shape: torch.Size([1000, 2])
+y shape: torch.Size([1000])
+</code></pre>
+<h2 id="artificial-neural-network">Artificial Neural Network<a hidden class="anchor" aria-hidden="true" href="#artificial-neural-network">#</a></h2>
+<p>Artificial Neural Network, or abreviated neural network in machine learning context, is the core of deep learning. The name and structure are inspired by human brain, mimicking the interactions of biological neurons.</p>
+<p>Let</p>
+<ul>
+<li>$x=(x_1,...,x_d)^T\in\mathbb{R}^d$ an input data vector</li>
+<li>$\sigma_i$ the $i$-th activation function such as ReLU, sigmoid or hyperbolic tangent that acts <strong>component-wise</strong> on a vector</li>
+<li>$W_i\in\mathbb{R}^{d_{i_1}\times d_{i_2}}$ the $i$-th weight matrix and $b_i\in\mathbb{R}^{d_{i_2}}$ the $i$-th bias vector.</li>
+</ul>
+<p>Let $A_i$ be the $i$-th affine map from $\mathbb{R}^{d_{{i-1}_2}}\to\mathbb{R}^{d_{{i}_2}}$
+</p>
+$$
+A_i y = W_iy+b_i
+$$
+<p>_
+where $y_i\in\mathbb{R}^{d_{i_1}}$ is the output of the previous layer.
+A neural network of depth $k$ is a series of composition
+</p>
+$$
+\mathcal{N}\mathcal{N}(x) = \sigma_k \circ A_k \circ \cdots \circ \sigma_2 \circ A_2 \circ \sigma_1 \circ A_1 x.
+$$
+<p>For example, a neural with single layer without activation can be implemented as</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Don&#39;t execute</span>
+</span></span><span style="display:flex;"><span>nn<span style="color:#f92672">.</span>Linear(input_dim,output_dim) 
+</span></span></code></pre></div><p>which performs the linear transformations on $X_{n\times i}\in\mathbb{R}^{n\times i}$:
+</p>
+$$
+Y_{n\times o} = X_{n\times i}W_{i\times o}+b_{o}
+$$
+<p>
+where $W_{i\times o}$ is a weight matrix and $b_o$ is a bias vector.</p>
+<p>Similarly, we can implement a neural network using three layers with sigmoid for the first and second layer is like</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Don&#39;t execute</span>
+</span></span><span style="display:flex;"><span>nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(input_dim,hidden_1),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Sigmoid(),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(hidden_1,hidden_2),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Sigmoid(),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(hidden_2,output_dim)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>In practice, one can implement the neural network with different tricks: adjusting the depth, number of layers, of neural network or width, number of neurons, of a layer, using dropout [1], using batch normalization [9], or even choosing another activation function if needed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Classifier</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self,hidden<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>        super(Classifier,self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>model <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Sigmoid()
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self,x):
+</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>model(x)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> output
+</span></span></code></pre></div><p>The universal approximation theorem is a key factor contributing to the widespread application of neural networks across various fields and scenarios. The universal approximation theorem originally is given by Cybenko in 1989 [6] using sigmoidal functions
+</p>
+$$
+\sigma(x)=
+\begin{cases}
+1, & x\to \infty \\
+0, & x\to-\infty
+\end{cases}.
+$$
+<p>
+Denote $I_n=[0,1]^n$ the $n$-dimensional unit cube and $C(I_n,\mathbb{R})$ space of continuous functions from $I_n$ to $\mathbb{R}$.</p>
+<p><strong>Theorem: universal approximation theorem, G. Cybenko.</strong> Let $\sigma$ be any continuous sigmoidal function, $f\in C(I_n,\mathbb{R})$. Then finite sums of the form
+</p>
+$$
+G^N(x)=\sum_{j=1}^N \alpha_j\sigma(w_j^T x+\theta_j)
+$$
+<p>
+are dense in the space of continuous functions $C(I_n,\mathbb{R})$. In other words, given any $f\in C(I_n,\mathbb{R})$, there exists $N\in\mathbb{N}$ such that
+</p>
+$$
+|G^N(x)-f(x)|<\epsilon \quad \text{for all } x\in I_n.
+$$
+<p>
+This original universal approximation theorem says a neural network with one layer and arbitrary width can approximate any continuous function on $[0,1]^n$, where $N$ is the number of neurons. Now there are many variants and generalizations of the theorem, for example [2],[8]. Another insight of the universality of neural network can be interpreted by ordinary differential equations, as referenced in [7].</p>
+<h2 id="monte-carlo-estimation">Monte Carlo Estimation<a hidden class="anchor" aria-hidden="true" href="#monte-carlo-estimation">#</a></h2>
+<p>In a nutshell, Monte Carlo estimation simply says that one can replace an intractable integral by an average of summation.</p>
+<p>Let $p(\mathbf{x},{\theta})$ be some probability distribution depending on a collection ${\theta}$ of parameters. Consider the expectation of the form
+</p>
+$$
+\mathcal{F}({\theta})=\int p(\mathbf{x},{\theta})f(\mathbf{x},{\phi})d\mathbf{x}=\mathbb{E}_{\mathbf{x}\sim p(\mathbf{x},{\theta})}\left[f(\mathbf{x},{\phi})\right]
+$$
+<p>
+where $\mathbf{x}$ is the input of objective $f$ with probability $p(\mathbf{x},{\theta})$, and ${\phi}$ is a set of the parameters of $f$. Of course, ${\phi}$ might be equal to ${\theta}$. We are interested in learning the parameters ${\theta}$, which requires the computation of the gradient of $\mathcal{F}({\theta})$ with respect to $\theta$:
+</p>
+$$
+\nabla_{{\theta}}\mathcal{F}({\theta})=\nabla_{{\theta}}\mathbb{E}_{\mathbf{x}\sim p(\mathbf{x},{\theta})}\left[f(\mathbf{x},{\phi})\right].
+$$
+<p>
+The expectation in general is intractable because the distribution $p(\mathbf{x},{\theta})$ might be high-dimensional, in deep learning, easily in the order of thousands or even more of dimensions, and very complicated. Moreover, the function $f$ might be non-differentiable, or a black-box function which the output is all we observe, artificial neural network for example.</p>
+<p>The Monte Carlo Method provides another insight of this sort of impossible calculation. Instead of computing the closed form of the integral directly, we draw i.i.d. samples $\hat{\mathbf{x}}^{(1)},...,\hat{\mathbf{x}}^{(S)}$ from $p(\mathbf{x},{\theta})$, and approximate the integral with the average of $f(\hat{\mathbf{x}}^{(i)},{\phi})$, called a Monte Carlo estimator:
+</p>
+$$
+\bar{\mathcal{F}}_S=\frac{1}{S}\sum_{i=1}^S f(\hat{\mathbf{x}}^{(i)},{\phi}).
+$$
+<p>
+Although $\bar{\mathcal{F}}_S$ is still a random variable because it depends on random variables $\hat{\mathbf{x}}^{(1)},...,\hat{\mathbf{x}}^{(S)}$, now it is equiped with desirable properties:</p>
+<p><strong>Unbiasedness.</strong>
+</p>
+$$
+\begin{align*}
+\mathbb{E}_{\hat{\mathbf{x}}^{(i)}\sim p(\hat{\mathbf{x}}^{(i)},{\theta})}\left[\bar{\mathcal{F}}_S\right] & = \mathbb{E}_{\hat{\mathbf{x}}^{(i)}\sim p(\hat{\mathbf{x}}^{(i)},{\theta})}\left[\frac{1}{S}\sum_{i=1}^S f(\hat{\mathbf{x}}^{(i)},{\phi})\right] = \frac{1}{S}\sum_{i=1}^S\mathbb{E}_{\hat{\mathbf{x}}^{(i)}\sim p(\hat{\mathbf{x}}^{(i)},{\theta})}\left[ f(\hat{\mathbf{x}}^{(i)},{\phi})\right] \\
+& = \mathbb{E}_{\mathbf{x}\sim p(\mathbf{x},{\theta})}\left[f(\mathbf{x},{\phi})\right].
+\end{align*}
+$$
+<p>
+Unbiasedness is always preferred because it allows us to guarantee the convergence of a stochastic optimisation procedure.</p>
+<p><strong>Consistency.</strong>
+By strong law of large numbers, the random variable $\bar{\mathcal{F}}_S$ converges to $\mathbb{E}_{\mathbf{x}\sim p(\mathbf{x},{\theta})}\left[f(\mathbf{x},{\phi})\right]$ almost surely as the number of samples $S$ increases.</p>
+<p>Monte Carlo estimation provides a convenient approach to approximate expectations. For example, in generative adversarial networks, the discriminator is updated with the loss function
+</p>
+$$
+-\mathbb{E}_{\hat{\mathbf{x}}\sim p_{data}}\left[\log D(\hat{\mathbf{x}})\right]-\mathbb{E}_{\hat{\mathbf{z}}\sim \mathcal{N}(0,\mathbf{I})} \left[\log (1-D(G(\hat{\mathbf{z}})))\right].
+$$
+<p>
+where $D$ is the discriminator network, $G$ is the generator network, $\hat{\mathbf{x}}^{(i)}$ is a datapoint sampled from data distribution $p_{data} $ and $z$ is a random noise vector sampled from $\mathcal{N}(0,\mathbf{I})$. With Monte Carlo estimation, instead of calculating two intractable integrals, we only need to calculate the average
+</p>
+$$
+-\frac{1}{m}\sum_{i=1}^m \ln D(\hat{\mathbf{x}}^{(i)})-\frac{1}{m}\sum_{i=1}^m \ln(1-D(G(\hat{\mathbf{z}}^{(i)}))).
+$$
+<p>
+The quantity $m$, or batch size, is a hyperparameter.</p>
+<p>In our classification task, if the output probability of a datapoint is $\geq 0.5$, it&rsquo;s identified as the class with label &ldquo;1&rdquo; otherwise &ldquo;0&rdquo;. Thus, we use <strong>binary cross entropy</strong> as our loss function,
+</p>
+$$
+-\mathbb{E}_{\hat{\mathbf{x}}^{(i)}\sim y_i=1} \log p_i-\mathbb{E}_{\hat{\mathbf{x}}^{(i)}\sim y_i=0} \log (1-p_i).
+$$
+<p>
+where $p_i=\text{Classifier}(\hat{\mathbf{x}}^{(i)})$ and $y_i$ is the label of $\hat{\mathbf{x}}^{(i)}$. With Monte Carlo estimation, we can implement the loss function
+</p>
+$$
+-\left[\frac{1}{m}\sum_{i=1}^{m} y_i\log p_i+(1-y_i)\log(1-p_i)\right]
+$$
+<p>
+with full batch $m=256$ in our case.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BCELoss()
+</span></span></code></pre></div><h2 id="automatic-differentiation">Automatic Differentiation<a hidden class="anchor" aria-hidden="true" href="#automatic-differentiation">#</a></h2>
+<p>Automatic differentiation is widely used for deep learning optimization. It is a clever way of performing chain rule without manually computing derivatives. If you use PyTorch, you don&rsquo;t have to implement autdifferentiation yourself. You can perform autdifferentiation with <code>autograd</code> in few lines.</p>
+<p>Let $f=f_u\circ f_{u-1}\circ \cdots \circ f_1$ be a function. Each $f_i:\mathbb{R}^n\to\mathbb{R}$ is differentiable. Chain rule of differentiation tells us how to compute the derivative:
+</p>
+$$
+\frac{df}{dx} = \frac{df_u}{df_{u-1}}\cdots\frac{df_{2}}{df_{1}}\frac{df_1}{dx}.
+$$
+<p>
+<strong>Forward-mode.</strong> Forward-mode autodifferentiation performs the chain rule in the fashion
+</p>
+$$
+\frac{df_i}{dx} = \frac{df_i}{df_{i-1}}\frac{df_{i-1}}{dx} \quad \text{for $i=2,...,u$},
+$$
+<p>
+or
+</p>
+$$
+\begin{equation}
+\frac{df}{dx} = \frac{df_u}{df_{u-1}}\left(\cdots\left(\frac{df_3}{df_2}\left(\frac{df_2}{df_1}\frac{df_1}{dx}\right)\right)\right) \tag{F1}.
+\end{equation}
+$$
+<p>
+<strong>Reverse-mode.</strong> Reverse-mode, also known as backpropagation, performs the chain rule in another way
+</p>
+$$
+\frac{df_u}{df_{i-1}} = \frac{df_u}{df_{i}}\frac{df_{i}}{df_{i-1}} \quad \text{for $i=u-1,...,1$ with $f_0=x$},
+$$
+<p>
+namely
+</p>
+$$
+\begin{equation}
+\frac{df}{dx} = \left(\left(\left(\frac{df_u}{df_{u-1}}\frac{df_{u-1}}{df_{u-2}}\right)\frac{df_{u-2}}{df_{u-3}}\right)\cdots\right)\frac{df_1}{dx} \tag{R1}. 
+\end{equation}
+$$
+<h4 id="computational-efficiency">Computational Efficiency<a hidden class="anchor" aria-hidden="true" href="#computational-efficiency">#</a></h4>
+<p>Each evaluation of $\text{(F1)}$ autodifferentiation is a matrix-matrix product, while each calculation of $\text{(R1)}$ is just a vector-matrix product. Thus, the reverse-mode autodifferentiation, or backpropagation, is always preferred for training neural networks.</p>
+<h4 id="what-autodifferentiation-is-not">What Autodifferentiation is not<a hidden class="anchor" aria-hidden="true" href="#what-autodifferentiation-is-not">#</a></h4>
+<p>Autodifferentiation is a <strong>procedure of calculating derivatives</strong>; it does not aim to find the closed form of solution.</p>
+<p><strong>It is not</strong></p>
+<ul>
+<li><strong>finite differences</strong>
+$$
+\frac{\partial}{\partial x_i}f(x_1,...,x_N) \approx \frac{f(x_1,...,x_i+h,...,x_N)-f(x_1,...,x_i,...,x_N)}{h}
+$$
+which are expensive and induce numerical error. We only use finite differences for testing the gradient.</li>
+<li><strong>symbolic differentiation</strong> which can result in complex and redundant expressions.</li>
+</ul>
+<h2 id="minibatch-stochastic-gradient-descent">Minibatch Stochastic Gradient Descent<a hidden class="anchor" aria-hidden="true" href="#minibatch-stochastic-gradient-descent">#</a></h2>
+<p>Nowadays, people usually prefer minibatch stochastic gradient descent to optimize neural networks, as it is more computationally efficient than gradient descent or stochastic gradient descent.</p>
+<p>Let $\ell$ be our loss function. Let $n$ be the number of training datapoint, $b$ the batch size, ${\theta^0}\in\mathbb{R}^d$ the initial parameter of our neural network and $(\alpha_t)_{t\in\mathbb{N}}$ a sequence of step size, or learning rate. Given a subsest $B\subset \{1,...,n\}$, we define
+</p>
+$$
+\nabla_{{\theta^t}} \ell_B({\theta^t})=\frac{1}{|B|}\sum_{i\in B} \nabla_{{\theta^t}} \ell_i({\theta^t})
+$$
+<p>
+The minibatch stochastic gradient descent algorithm is given by
+</p>
+$$
+\begin{aligned}
+& B_t\subset\{1,...,n\} \quad\quad \text{Sampled uniformly among sets of size $b$} \\
+& {\theta^{t+1}} = {\theta^t}-\alpha_t \nabla_{{\theta^t}} \ell_B({\theta^t}).
+\end{aligned}
+$$
+<p>
+Note that $\nabla_{{\theta^t}} \ell_B({\theta^t})$ is an unbiased estimator
+</p>
+$$
+\mathbb{E}_{b}\left[\nabla_{{\theta^t}} \ell_B({\theta^t})\right] = \frac{1}{{n \choose b}} \sum_{\substack{B\subset\{1,...,n\} \\ |B|=b}} \nabla_{{\theta^t}} \ell_B({\theta^t}) = \nabla_{{\theta^t}} \ell({\theta^t})
+$$
+<p>
+because each batch is sampled with probability $\frac{1}{{n \choose b}}$. Readers interested in the convergence of minibatch SGD with convex and smooth functions may check [3] for related theorems and proofs.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n_epoch <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>
+</span></span><span style="display:flex;"><span>lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.105</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> Classifier()
+</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>SGD(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span>lr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>loss_record <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>acc_record <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n_epoch):
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>train()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    output_prob <span style="color:#f92672">=</span> model(X)<span style="color:#f92672">.</span>squeeze()
+</span></span><span style="display:flex;"><span>    pred <span style="color:#f92672">=</span> (output_prob <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0.5</span>)<span style="color:#f92672">.</span>float()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Calculate loss</span>
+</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> criterion(output_prob, y)
+</span></span><span style="display:flex;"><span>    loss_record<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Calculate accuracy</span>
+</span></span><span style="display:flex;"><span>    correct <span style="color:#f92672">=</span> (pred <span style="color:#f92672">==</span> y)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>    acc <span style="color:#f92672">=</span> correct <span style="color:#f92672">/</span> len(pred) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>    acc_record<span style="color:#f92672">.</span>append(acc)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Backpropagation</span>
+</span></span><span style="display:flex;"><span>    optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>    loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>    optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span><span style="color:#ae81ff">20</span><span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Epoch </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> loss </span><span style="color:#e6db74">{:.4f}</span><span style="color:#e6db74"> acc </span><span style="color:#e6db74">{:.2f}</span><span style="color:#e6db74">%&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, loss, acc))
+</span></span></code></pre></div><pre><code>Epoch 20 loss 0.7069 acc 49.40%
+Epoch 40 loss 0.7011 acc 48.90%
+Epoch 60 loss 0.6982 acc 49.30%
+Epoch 80 loss 0.6965 acc 49.80%
+Epoch 100 loss 0.6954 acc 49.60%
+Epoch 120 loss 0.6948 acc 49.60%
+Epoch 140 loss 0.6943 acc 49.60%
+Epoch 160 loss 0.6940 acc 50.10%
+Epoch 180 loss 0.6938 acc 49.70%
+Epoch 200 loss 0.6936 acc 49.50%
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Plot Loss</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(loss_record, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Training Loss&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Training Loss&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Epoch&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Loss&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>legend()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot Accuracy</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(acc_record, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Training Accuracy&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;orange&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Training Accuracy&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Epoch&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Accuracy (%)&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>legend()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>tight_layout()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img loading="lazy" src="https://levi0206.github.io/lerblog/basics/Basics_24_0.png" alt="png"  />
+</p>
+<h1 id="references">References<a hidden class="anchor" aria-hidden="true" href="#references">#</a></h1>
+<p>[1] Srivastava, Nitish, Geoffrey E, Hinton, Alex, Krizhevsky, Ilya, Sutskever, Ruslan, Salakhutdinov. &ldquo;Dropout: a simple way to prevent neural networks from overfitting&rdquo;. Journal of machine learning research 15. 1(2014): 1929–1958.</p>
+<p>[2] Zhou, Ding-Xuan. &ldquo;Universality of Deep Convolutional Neural Networks.&rdquo;. CoRR abs/1805.10769. (2018).</p>
+<p>[3] Bubeck, Sébastien. &ldquo;Convex Optimization: Algorithms and Complexity.&rdquo;. Foundations and Trends in Machine Learning 8. 3-4(2015): 231–357.</p>
+<p>[4] Baydin, Atilim Gunes, Barak A., Pearlmutter, Alexey Andreyevich, Radul, Jeffrey Mark, Siskind. &ldquo;Automatic Differentiation in Machine Learning: a Survey.&rdquo;. J. Mach. Learn. Res. 18. (2017): 153:1–153:43.</p>
+<p>[5] Mohamed, Shakir, Mihaela, Rosca, Michael, Figurnov, Andriy, Mnih. &ldquo;Monte Carlo Gradient Estimation in Machine Learning.&rdquo;. J. Mach. Learn. Res. 21. (2020): 132:1–132:62.</p>
+<p>[6] Cybenko, George. &ldquo;Approximation by superpositions of a sigmoidal function.&rdquo;. Math. Control. Signals Syst. 2. 4(1989): 303–314.</p>
+<p>[7] Kidger, Patrick. &ldquo;On Neural Differential Equations.&rdquo; (2022).</p>
+<p>[8] Pinkus, Allan. &ldquo;Approximation theory of the MLP model in neural networks&rdquo;. Acta Numerica 8. (1999): 143–195.</p>
+<p>[9] Ioffe, Sergey, Christian, Szegedy. &ldquo;Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift.&rdquo; Proceedings of the 32nd International Conference on Machine Learning. PMLR, 2015.</p>
+<p>[10] Ruder, Sebastian. &ldquo;An overview of gradient descent optimization algorithms.&rdquo; (2016).</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="//localhost:1313/posts/autodiff/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Understand Automatic Differentiation</span>
+  </a>
+  <a class="next" href="//localhost:1313/posts/first/">
+    <span class="title">Next »</span>
+    <br>
+    <span>How to Build your Website Using Hugo on GitHub Pages: Summary </span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="//localhost:1313/">Ler&#39;Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script></body>
+
+</html>

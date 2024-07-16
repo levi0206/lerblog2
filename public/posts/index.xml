@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on Ler&#39;Blog</title>
+    <link>//localhost:1313/posts/</link>
+    <description>Recent content in Posts on Ler&#39;Blog</description>
+    <generator>Hugo -- 0.128.2</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 17 Jul 2024 00:00:42 +0800</lastBuildDate>
+    <atom:link href="//localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understand Automatic Differentiation</title>
+      <link>//localhost:1313/posts/autodiff/</link>
+      <pubDate>Wed, 17 Jul 2024 00:00:42 +0800</pubDate>
+      <guid>//localhost:1313/posts/autodiff/</guid>
+      <description>Automatic differentiation (or auto-differentiation, AD) is crucial in deep learning and widely used in almost every neural network optimization because it enables the efficient and accurate computation of gradients, which are essential for training models through techniques such as gradient descent. It has been integrated into many deep-learning frameworks such as PyTorch and TensorFlow, allowing users to perform AD on neural networks with just a few lines of code. This post aims to clarify concepts such as forward mode, reverse mode, and computational graphs, though from an engineering perspective, it is still possible to build models without a deep understanding of automatic differentiation.</description>
+    </item>
+    <item>
+      <title>Deep Learning Basics</title>
+      <link>//localhost:1313/posts/basics/</link>
+      <pubDate>Thu, 01 Feb 2024 10:20:33 +0800</pubDate>
+      <guid>//localhost:1313/posts/basics/</guid>
+      <description>In this post, we mention some important concepts in deep learning, including
+artificial neural network automatic differentiation Monte Carlo estimation minibatch stochastic gradient descent. Given the extensive nature of each subsection, a comprehensive coverage is beyond the scope. Instead, we will pick certain subjects, explain some important ideas and theorems that support these mechanisms, and provide a simple example as demonstration.
+# Standard PyTorch import import torch import torch.nn as nn import numpy as np import random import matplotlib.</description>
+    </item>
+    <item>
+      <title>How to Build your Website Using Hugo on GitHub Pages: Summary </title>
+      <link>//localhost:1313/posts/first/</link>
+      <pubDate>Thu, 01 Feb 2024 10:04:47 +0800</pubDate>
+      <guid>//localhost:1313/posts/first/</guid>
+      <description>Hugo is a fast and modern static site generator that makes building website much easier. With Hugo, you can host your beautiful website on GitHub Pages, Netlify or other platforms.
+Create a Hugo blog Before we start, please make sure your hugo is installed. You can check your hugo version by typing
+hugo version at your terminal. Next, go to the directory that you want to store website
+cd Home for example, and run</description>
+    </item>
+  </channel>
+</rss>
