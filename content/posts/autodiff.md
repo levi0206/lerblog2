@@ -16,7 +16,52 @@ It must be clarified that the automatic differentiation is not numerical differe
 $$
 \frac{d}{dx}f(x) \approx \frac{f(x+h)-f(x)}{h}, \quad h \text{ small},
 $$
-which requires numerical precision. Due to the nature of the method, the calculation of the derivative will definitely cause error that we do not want to expect. 
+which requires numerical precision. Due to the nature of the method, the calculation of the derivative will definitely cause error that we do not want to expect. Also, the accuracy is directly influenced by the choice of the stepsize $h$. Consider a function
+$$
+g(x) = \exp((-3)cos^2(4x))
+$$
+with derivative
+$$
+\frac{dg}{dx} = 24*\exp((-3)cos^2(4x))*cos(4x)*sin(4x).
+$$
+Now we calculate the exact derivative and the estimated derivative using foward-difference method:
+```
+def g(x):
+    return np.exp(-3*np.cos(4*x)**2)
+
+# Exact derivative
+def dgdx(x):
+    return 24*np.exp((-3)*np.cos(4*x)**2)*np.cos(4*x)*np.sin(4*x)
+
+# Forward difference with stepsize h
+def forward_diff(f, x, h):
+    return (f(x+h)-f(x))/h
+def backward_diff(f, x, h):
+    return (f(x)-f(x-h))/h
+def centered_diff(f, x, h):
+    return (f(x+h)-f(x-h))/2*h
+
+x = np.linspace(0, 2, 1000)
+hs = np.logspace(-13, 1, 1000)
+
+errs = np.zeros(len(hs))
+
+for i, h in enumerate(hs):
+    # Compuate the difference and store L2 norm of error
+    err = forward_diff(g, x, h)-dgdx(x) 
+    errs[i] = np.linalg.norm(err) 
+
+# Plot
+fig, ax = plt.subplots(1,1, figsize=(8,6))
+ax.plot(hs, errs, lw=3)
+ax.set_xscale('log')
+ax.set_yscale('log')
+ax.set_xlabel('h', fontsize=12)
+ax.set_ylabel(r'$\|g^{\prime}_{FD}-g^{\prime}_{exact}\|_{L_2}$', fontsize=14)
+plt.tight_layout()
+```
+The $L_2$ norm error of $g_{exact}$ and $g_{FD}$ with the change of stepsize is given by
+![png](https://levi0206.github.io/lerblog2/autodiff/finite_diff.png)
 
 ## Automatic Differentiation
 Let first consider a composition function $f$ without specifying its domain and co-domain
