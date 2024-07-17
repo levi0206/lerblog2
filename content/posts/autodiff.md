@@ -18,13 +18,13 @@ $$
 $$
 For example, let
 $$
-f(x) = e^{-x^2} = \exp(x^2).
+f(x) = e^{-x^2} = \exp(-x^2).
 $$
 Write $y=y(x)=x^2$; the derivative $f'$ is given by
 $$
 \begin{aligned}
 f'(x) & = \frac{df}{dy}\frac{dy}{dx} \\
-& = \frac{d}{dy} e^y \cdot \frac{d}{dx} -x^2 \\
+& = \frac{d}{dy} e^y \cdot \frac{d}{dx} (-x^2) \\
 & = e^{y(x)} \cdot (-2x) \\
 & = e^{-x^2} \cdot (-2x).
 \end{aligned}
