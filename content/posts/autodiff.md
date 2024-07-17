@@ -75,3 +75,8 @@ while the reverse mode requires
 $$
 |\mathbf{c}|\cdot|\mathbf{a}|\cdot|\mathbf{b}|+|\mathbf{c}|\cdot|\mathbf{a}|\cdot|\mathbf{x}| = |\mathbf{c}|\cdot|\mathbf{a}|(|\mathbf{b}|+|\mathbf{x}|).
 $$
+Which one is more efficient? It depends, but let's first consider a simple case $|\mathbf{c}|\geq|\mathbf{b}|\geq|\mathbf{a}|\geq|\mathbf{x}|$; namely, the input is low dimensional and the output is high dimensional. In this case, the forward mode is more efficient because
+$$
+\frac{|\mathbf{c}|\cdot|\mathbf{a}|}{|\mathbf{x}|\cdot|\mathbf{b}|}\ge\frac{|\mathbf{c}|+|\mathbf{a}|}{|\mathbf{x}|+|\mathbf{b}|}.
+$$
+Conversely, if $|\mathbf{c}|\leq|\mathbf{b}|\leq|\mathbf{a}|\leq|\mathbf{x}|$ (e.g. $f$ is vector-input-scalar-output), then the reverse mode is more efficient. However, there's an intuitive way of seeing this. Let $\mathbf{x}$ be a vector and let $f$ output a scalar. Suppose the output of $f_i$ is a vevtor. Then the forward-mode AD performs matrix-matrix products, while the reverse mode performs vector-matrix products, which is the reason why in practice, we always use reverse-mode AD because the loss function is typically a real-valued function taking a vector as input.
