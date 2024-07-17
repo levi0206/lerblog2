@@ -10,7 +10,7 @@ In this post, we mention some important concepts in deep learning, including
 - Monte Carlo estimation 
 - minibatch stochastic gradient descent.
 
-Given the extensive nature of each subsection, a comprehensive coverage is beyond the scope. Instead, we will pick certain subjects, explain some important ideas and theorems that support these mechanisms, and provide a simple example as demonstration.
+Given the extensive nature of each subsection, a comprehensive coverage is beyond the scope. Instead, we will pick certain subjects, explain some important ideas and theorems that support these mechanisms, and provide a toy example.
 
 
 ```python
@@ -334,12 +334,9 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 ```
-
-
     
 ![png](https://levi0206.github.io/lerblog2/basics/Basics_24_0.png)
     
-
 
 # References
 [1] Srivastava, Nitish, Geoffrey E, Hinton, Alex, Krizhevsky, Ilya, Sutskever, Ruslan, Salakhutdinov. "Dropout: a simple way to prevent neural networks from overfitting". Journal of machine learning research 15. 1(2014): 1929–1958.
