@@ -18,11 +18,11 @@ $$
 $$
 which requires numerical precision. Due to the nature of the method, the calculation of the derivative will definitely cause error that we do not want to expect. Also, the accuracy is directly influenced by the choice of the stepsize $h$. Consider a function
 $$
-g(x) = \exp((-3)cos^2(4x))
+g(x) = \exp((-3)\cos^2(4x))
 $$
 with derivative
 $$
-\frac{dg}{dx} = 24*\exp((-3)cos^2(4x))*cos(4x)*sin(4x).
+\frac{dg}{dx} = 24*\exp((-3)\cos^2(4x))*\cos(4x)*\sin(4x).
 $$
 Now we calculate the exact derivative and the estimated derivative using foward-difference method:
 ```
@@ -60,7 +60,7 @@ ax.set_xlabel('h', fontsize=12)
 ax.set_ylabel(r'$\|g^{\prime}_{FD}-g^{\prime}_{exact}\|_{L_2}$', fontsize=14)
 plt.tight_layout()
 ```
-The $L_2$ norm error of $g_{exact}$ and $g_{FD}$ with the change of stepsize is given by
+The $L_2$ norm error of $g_{exact}'$ and $g_{FD}'$ with the change of stepsize is given by
 ![png](https://levi0206.github.io/lerblog2/autodiff/finite_diff.png)
 
 ## Automatic Differentiation
