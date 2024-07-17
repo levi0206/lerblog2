@@ -3,6 +3,9 @@ title: "How to Build your Website Using Hugo on GitHub Pages: Summary "
 date: 2024-02-01T10:04:47+08:00
 draft: false
 ---
+## Update log
+- 2024-07-17 Add steps for installing and updating the theme; update workflow
+
 Hugo is a fast and modern static site generator that makes building website much easier. With Hugo, you can host your beautiful website on GitHub Pages, Netlify or other platforms.
 ## Create a Hugo blog
 Before we start, please make sure your hugo is installed. You can check your hugo version by typing 
@@ -64,6 +67,20 @@ draft: true
 ---
 ```
 
+## Install and Update PaperMod theme
+You can go to the folder of your hugo website and install the theme 
+```
+cd testhugo
+git submodule add --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+git submodule update --init --recursive
+```
+
+Update the theme inside `testhugo` with the command
+```
+git submodule update --remote --merge
+```
+Do not make any change in the submodule because it might cause errors when you deploy the page using GitHub Actions.
+
 ## Custom layout
 If you want to customize some `.html` files, say `/themes/PaperMod/layouts/partials/footer.html`, here are the steps:
 1. Create a folder `partials` with exactly same name under `testhugo/layouts` and copy `footer.html` to `layouts/partials/footer.html`.
@@ -121,7 +138,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.122.0
+      HUGO_VERSION: 0.128.0
     steps:
       - name: Install Hugo CLI
         run: |
@@ -136,21 +153,21 @@ jobs:
           fetch-depth: 0
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
       - name: Build with Hugo
         env:
-          # For maximum backward compatibility with Hugo modules
+          HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
-          HUGO_ENV: production
+          TZ: America/Los_Angeles
         run: |
           hugo \
             --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"          
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
 
@@ -164,7 +181,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
 ```
 Note that it's `workflows`, not `workflow`. Then commit this change like
 ```
@@ -191,6 +208,7 @@ fatal authentication failed ...
 The password does not mean "log-in" password; instead, it means "personal access tokens". If you don't have one, generate it. If you forget your personal access tokens, please go to the [documentation](https://docs.github.com/en/organizations/managing-programmatic-access-to-your-organization/reviewing-and-revoking-personal-access-tokens-in-your-organization).
 
 Once you successfully push your code, you can go to "Actions" and check your website once the workflow finishes.
+
 ## Add images to your post
 Suppose you want to insert an image `cat.png` into `first-post.md`. Be careful that you have to
 1. Add `cat.png` to the `static` folder. For example, 
