@@ -42,7 +42,7 @@ are differentiable, $n,n_1,n_2,n_3\in\mathbb{N}$. For a vector $\mathbf{x}\in\ma
 $$
 \mathbf{a} = f_1(\mathbf{x}), \quad \mathbf{b} = f_2(\mathbf{a}), \quad \mathbf{c} = f_3(\mathbf{b})
 $$
-where the bold letter denotes a vector. The Jacobian matrix of $f$ given by
+where the bold letter denotes a vector. The Jacobian matrix of $f$ expressed as
 $$
 \frac{df}{d\mathbf{x}} = 
 
