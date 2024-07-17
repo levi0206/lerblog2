@@ -12,11 +12,11 @@ Let first consider a composition function $f$ without specifying its domain and 
 $$
 f(x) = f_n(f_{n-1}(\ldots f_1(x)))
 $$
-and suppose for every $i$, $f_i$ is differentiable. From calculus, we know that the derivative of $f$ evaluated at $x_0$ is given by 
+and suppose for every $i$, $f_i$ is differentiable. By chain rule, we know that the derivative of $f$ evaluated at $x_0$ is given by 
 $$
 \frac{df}{dx}(x_0) = \frac{df_n}{df_{n-1}}(x_0)\cdots\frac{df_2}{df_1}(x_0)\frac{df_1}{dx}(x_0).
 $$
-For example, let
+For example, let $f:\mathbb{R}\to\mathbb{R}$ defined by
 $$
 f(x) = e^{-x^2} = \exp(-x^2).
 $$
@@ -29,3 +29,12 @@ f'(x) & = \frac{df}{dy}\frac{dy}{dx} \\
 & = e^{-x^2} \cdot (-2x).
 \end{aligned}
 $$
+Now we may consider a differentiable function with vector input. Let 
+$$
+f = f_3 \circ f_2 \circ f_1 where
+$$
+- $f_1:\mathbb{R}^n\to\mathbb{R}^{n_1}$
+- $f_2:\mathbb{R}^{n_1}\to\mathbb{R}^{n_2}$
+- $f_3:\mathbb{R}^{n_2}\to\mathbb{R}^{n_3}$
+
+are differentiable, $n,n_1,n_2,n_3\in\mathbb{N}$. 
