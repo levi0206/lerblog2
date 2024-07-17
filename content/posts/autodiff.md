@@ -20,7 +20,7 @@ For example, let $f:\mathbb{R}\to\mathbb{R}$ defined by
 $$
 f(x) = e^{-x^2} = \exp(-x^2).
 $$
-Write $y=y(x)=x^2$; the derivative $f'$ is given by
+Write $y=y(x)=-x^2$; the derivative $f'$ is given by
 $$
 \begin{aligned}
 f'(x) & = \frac{df}{dy}\frac{dy}{dx} \\
@@ -42,4 +42,13 @@ are differentiable, $n,n_1,n_2,n_3\in\mathbb{N}$. For a vector $\mathbf{x}\in\ma
 $$
 \mathbf{a} = f_1(\mathbf{x}), \quad \mathbf{b} = f_2(\mathbf{a}), \quad \mathbf{c} = f_3(\mathbf{b})
 $$
-where the bold letter denotes a vector.
+where the bold letter denotes a vector. The Jacobian matrix of $f$
+$$
+\frac{df}{d\mathbf{x}} = 
+
+\begin{bmatrix}
+\frac{df_1}{dx_1} & \dots & \frac{df_1}{dx_n} \\
+\vdots & & \vdots \\
+\frac{df_{n_3}}{dx_1} & \dots & \frac{df_{n_3}}{dx_n}
+\end{bmatrix} \in \mathbb{R}^{n_3\times n}
+$$
