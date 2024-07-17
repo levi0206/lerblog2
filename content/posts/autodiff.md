@@ -45,10 +45,11 @@ $$
 where the bold letter denotes a vector. The Jacobian matrix of $f$ expressed as
 $$
 \frac{df}{d\mathbf{x}} = 
-
+\left[
 \begin{matrix}
 \frac{df_1}{dx_1} & \dots & \frac{df_1}{dx_n} \\
-\vdots & \dots & \vdots \\
-\frac{df_{n_3}}{dx_1} & \ddots & \frac{df_{n_3}}{dx_n}
-\end{matrix} \in \mathbb{R}^{n_3\times n}
+\vdots & \ddots & \vdots \\
+\frac{df_{n_3}}{dx_1} & \dots & \frac{df_{n_3}}{dx_n}
+\end{matrix}
+\right] \in\mathbb{R}^{n_3\times n}
 $$
