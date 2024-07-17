@@ -5,6 +5,8 @@ draft: false
 ---
 
 Automatic differentiation, or AD, is crucial in deep learning and widely used in almost every neural network optimization because it enables the efficient and accurate computation of gradients, which are essential for training models through techniques such as gradient descent. It has been integrated into many deep-learning frameworks such as PyTorch and TensorFlow, allowing users to perform AD on neural networks with just a few lines of code. This post aims to clarify concepts such as forward mode, reverse mode, and computational graphs, though from an engineering perspective, it is still possible to build models without a deep understanding of automatic differentiation.
+
+## Outline
 - Forward mode and reverse mode of automatic differentiation
 - Computational graph illustration
 
@@ -55,7 +57,7 @@ $$
 $$
 can be obtained by a product of Jacobian matrices
 $$
-\underbrace{\frac{df}{d \mathbf{x}}}_{|\mathbf{y}|\times|\mathbf{x}|} = \underbrace{\frac{d \mathbf{c}(\mathbf{b})}{d \mathbf{b}}}_{|\mathbf{c}|\times|\mathbf{b}|} \underbrace{\frac{d \mathbf{b}(\mathbf{a})}{d \mathbf{a}}}_{|\mathbf{b}|\times|\mathbf{a}|} \underbrace{\frac{d \mathbf{a}(\mathbf{x})}{d \mathbf{x}}}_{|\mathbf{a}|\times|\mathbf{x}|}
+\underbrace{\frac{df}{d \mathbf{x}}}_{|\mathbf{c}|\times|\mathbf{x}|} = \underbrace{\frac{d \mathbf{c}(\mathbf{b})}{d \mathbf{b}}}_{|\mathbf{c}|\times|\mathbf{b}|} \underbrace{\frac{d \mathbf{b}(\mathbf{a})}{d \mathbf{a}}}_{|\mathbf{b}|\times|\mathbf{a}|} \underbrace{\frac{d \mathbf{a}(\mathbf{x})}{d \mathbf{x}}}_{|\mathbf{a}|\times|\mathbf{x}|}
 $$
 in which $|\mathbf{x}|$ denotes the dimension of $\mathbf{x}$ and the size of each Jacobian matrix is annoted using underbraces. The "forward" and "reverse" refer to the **order** of calculating derivatives. In the forward mode, we calculate $\frac{df}{d\mathbf{x}}$ in this fashion
 $$
@@ -64,4 +66,12 @@ $$
 and in the reverse mode, we compute
 $$
 \frac{df}{d\mathbf{x}} = \left(\frac{d\mathbf{c}}{d\mathbf{b}}\frac{d\mathbf{b}}{d\mathbf{a}}\right)\frac{d\mathbf{a}}{d\mathbf{x}}.
+$$
+Now, note that for two matrices $A,B$ of size $a\times b$ and $b\times c$, the number of multiplications in the product $A\cdot B$ is $a\cdot b\cdot c$. Thus, the forward mode requires
+$$
+|\mathbf{x}|\cdot|\mathbf{a}|\cdot|\mathbf{b}|+|\mathbf{x}|\cdot|\mathbf{b}|\cdot|\mathbf{c}| = |\mathbf{x}|\cdot|\mathbf{b}|(|\mathbf{a}|+|\mathbf{c}|),
+$$
+while the reverse mode requires
+$$
+|\mathbf{c}|\cdot|\mathbf{a}|\cdot|\mathbf{b}|+|\mathbf{c}|\cdot|\mathbf{a}|\cdot|\mathbf{x}| = |\mathbf{c}|\cdot|\mathbf{a}|(|\mathbf{b}|+|\mathbf{x}|).
 $$
