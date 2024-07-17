@@ -12,7 +12,11 @@ Automatic differentiation, or AD, is crucial in deep learning and widely used in
 - Computational graph illustration
 
 ## What Automatic Differentiation is not?
-
+It must be clarified that the automatic differentiation is not numerical differentiation, which calculates the derivative of $f$ using definition
+$$
+\frac{d}{dx}f(x) \approx \frac{f(x+h)-f(x)}{h}, \quad h \text{ small},
+$$
+which requires numerical precision. Due to the nature of the method, the calculation of the derivative will definitely cause error that we do not want to expect. 
 
 ## Automatic Differentiation
 Let first consider a composition function $f$ without specifying its domain and co-domain
