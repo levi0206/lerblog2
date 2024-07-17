@@ -14,5 +14,18 @@ f(x) = f_n(f_{n-1}(\ldots f_1(x)))
 $$
 and suppose for every $i$, $f_i$ is differentiable. From calculus, we know that the derivative of $f$ evaluated at $x_0$ is given by 
 $$
-\frac{df}{dx}(x_0) = \frac{df_n}{df_{n-1}}\cdots\frac{df_2}{df_1}\frac{df_1}{dx}(x_0).
+\frac{df}{dx}(x_0) = \frac{df_n}{df_{n-1}}(x_0)\cdots\frac{df_2}{df_1}(x_0)\frac{df_1}{dx}(x_0).
+$$
+For example, let
+$$
+f(x) = e^{-x^2} = \exp(x^2).
+$$
+Write $y=y(x)=x^2$; the derivative $f'$ is given by
+$$
+\begin{aligned}
+f'(x) & = \frac{df}{dy}\frac{dy}{dx} \\
+& = \frac{d}{dy} e^y \cdot \frac{d}{dx} -x^2 \\
+& = e^{y(x)} \cdot (-2x) \\
+& = e^{-x^2} \cdot (-2x).
+\end{aligned}
 $$
