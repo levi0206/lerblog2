@@ -21,8 +21,8 @@ menu:
 # Params is capitalized
 Params:
   homeInfoParams:
-    Title: "👋Welcome to Ler'Blog"
-    Content: Domumenting my deep learning/math/statistics stuff.
+    Title: "👋 Welcome to Ler'Blog"
+    Content: Domumenting my deep-learning/math/statistics stuff.
   ShowBreadCrumbs: true
   ShowReadingTime: true
   ShowPostNavLinks: true
