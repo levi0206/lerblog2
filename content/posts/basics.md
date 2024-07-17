@@ -49,7 +49,7 @@ plt.scatter(x=X[:,0],y=X[:,1], marker="o", c=y, s=25)
 
 
     
-![png](https://levi0206.github.io/lerblog/basics/Basics_1_1.png)
+![png](https://levi0206.github.io/lerblog2/basics/Basics_1_1.png)
 
 
 ```python
@@ -337,7 +337,7 @@ plt.show()
 
 
     
-![png](https://levi0206.github.io/lerblog/basics/Basics_24_0.png)
+![png](https://levi0206.github.io/lerblog2/basics/Basics_24_0.png)
     
 
 
