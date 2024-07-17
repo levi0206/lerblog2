@@ -29,12 +29,17 @@ f'(x) & = \frac{df}{dy}\frac{dy}{dx} \\
 & = e^{-x^2} \cdot (-2x).
 \end{aligned}
 $$
-Now we may consider a differentiable function with vector input. Let 
+Now we may consider a differentiable function $f:\mathbb{R}^n\to\mathbb{R}^{n_3}$ with vector input. Let 
 $$
-f = f_3 \circ f_2 \circ f_1 where
+f = f_3 \circ f_2 \circ f_1 
 $$
+where
 - $f_1:\mathbb{R}^n\to\mathbb{R}^{n_1}$
 - $f_2:\mathbb{R}^{n_1}\to\mathbb{R}^{n_2}$
 - $f_3:\mathbb{R}^{n_2}\to\mathbb{R}^{n_3}$
 
-are differentiable, $n,n_1,n_2,n_3\in\mathbb{N}$. 
+are differentiable, $n,n_1,n_2,n_3\in\mathbb{N}$. For a vector $\mathbf{x}\in\mathbb{R}^n$, write 
+$$
+\mathbf{a} = f_1(\mathbf{x}), \quad \mathbf{b} = f_2(\mathbf{a}), \quad \mathbf{c} = f_3(\mathbf{b})
+$$
+where the bold letter denotes a vector.
