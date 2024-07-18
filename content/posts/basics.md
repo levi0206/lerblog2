@@ -21,7 +21,8 @@ import torch.nn as nn
 import numpy as np
 import random
 import matplotlib.pyplot as plt
-from sklearn.datasets import make_circles
+from sklearn.datasets import make_blobs
+
 
 # Set seed
 SEED = 2024 
@@ -33,24 +34,15 @@ random.seed(SEED)
 np.random.seed(SEED)
 
 # Generate dataset
-X, y = X, y = make_circles(1000,
-                    noise=0.1, 
-                    random_state=42)
-
+X, y = make_blobs(n_samples=1000,
+                  n_features=2,
+                  centers=2,
+                  cluster_std=3,
+                  random_state=1)
 # Plot dataset
-plt.scatter(x=X[:,0],y=X[:,1], marker="o", c=y, s=25)
-```
-
-
-
-
-    <matplotlib.collections.PathCollection at 0x7f48510f9bb0>
-
-
-
-
-    
-![png](https://levi0206.github.io/lerblog2/basics/Basics_1_1.png)
+plt.scatter(x=X[:,0], y=X[0:,1], marker="o", c=y, s=25)
+```    
+![png](https://levi0206.github.io/lerblog2/basics/make_blobs.png)
 
 
 ```python
@@ -121,8 +113,8 @@ class Classifier(nn.Module):
     def __init__(self,hidden=4):
         super(Classifier,self).__init__()
         self.model = nn.Sequential(
-            nn.Linear(2,4),
-            nn.Linear(4,1),
+            nn.Linear(2,5),
+            nn.Linear(5,1),
             nn.Sigmoid()
         )
     def forward(self,x):
@@ -270,8 +262,8 @@ because each batch is sampled with probability $\frac{1}{{n \choose b}}$. Reader
 
 
 ```python
-n_epoch = 200
-lr = 0.105
+n_epoch = 1000
+lr = 0.0005
 model = Classifier()
 optimizer = torch.optim.SGD(model.parameters(), lr=lr)
 
@@ -298,22 +290,20 @@ for i in range(n_epoch):
     loss.backward()
     optimizer.step()
 
-    if (i+1)%20==0:
+    if (i+1)%100==0:
         print("Epoch {} loss {:.4f} acc {:.2f}%".format(i+1, loss, acc))
 ```
 
-    Epoch 20 loss 0.7069 acc 49.40%
-    Epoch 40 loss 0.7011 acc 48.90%
-    Epoch 60 loss 0.6982 acc 49.30%
-    Epoch 80 loss 0.6965 acc 49.80%
-    Epoch 100 loss 0.6954 acc 49.60%
-    Epoch 120 loss 0.6948 acc 49.60%
-    Epoch 140 loss 0.6943 acc 49.60%
-    Epoch 160 loss 0.6940 acc 50.10%
-    Epoch 180 loss 0.6938 acc 49.70%
-    Epoch 200 loss 0.6936 acc 49.50%
-
-
+    Epoch 100 loss 0.6060 acc 62.00%
+    Epoch 200 loss 0.4755 acc 69.70%
+    Epoch 300 loss 0.3889 acc 78.20%
+    Epoch 400 loss 0.3318 acc 83.90%
+    Epoch 500 loss 0.2934 acc 87.40%
+    Epoch 600 loss 0.2667 acc 90.50%
+    Epoch 700 loss 0.2474 acc 91.70%
+    Epoch 800 loss 0.2329 acc 92.40%
+    Epoch 900 loss 0.2216 acc 92.50%
+    Epoch 1000 loss 0.2125 acc 92.90%
 
 ```python
 # Plot Loss
