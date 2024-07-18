@@ -333,9 +333,10 @@ plt.show()
     
 ![png](https://levi0206.github.io/lerblog2/basics/loss_acc.png)
 
+## Conclusion
 In this post, we discussed several key concepts in deep learning, including artificial neural networks, automatic differentiation, Monte Carlo estimation, and minibatch stochastic gradient descent. Each of these components is crucial for developing and optimizing neural network models.
 
-- **Artificial Neural Networks (ANNs)** form the backbone of deep learning, capable of approximating complex functions, supported by the Universal Approximation Theorem.
+- **Artificial Neural Networks** form the backbone of deep learning, capable of approximating complex functions, supported by the Universal Approximation Theorem.
 - **Automatic Differentiation** is essential for efficiently computing gradients, fundamental for training neural networks through optimization algorithms like gradient descent.
 - **Monte Carlo Estimation** provides a method for approximating intractable integrals, useful for training models whose loss function includes the calculation of expectations.
 - **Minibatch Stochastic Gradient Descent** balances computational efficiency and convergence speed, as demonstrated in our classifier training example.
