@@ -282,4 +282,5 @@ In other words, the operations to obtain the partial derivative can be summarize
     $$
 
 Now we present the calculation in **computational graphs**. The procedure of the forward-mode automatic differentiation can be expressed as the graph
+
 ![png](https://levi0206.github.io/lerblog2/autodiff/forward.png)
