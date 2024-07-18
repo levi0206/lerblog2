@@ -114,7 +114,7 @@ plt.show()
 ```
 ![png](https://levi0206.github.io/lerblog2/autodiff/finite_diff_compare.png)
 
-The equation \eqref{eq1} is also the symbolic expression of $g$, result of symbolic differentiation. As we can see, the symbolic expression can be quite long and tedious. If the function gets more complicated, the computation can be inefficient. For example, $f$ consists of long compositions or and even takes a vector as input. Thus, we summarize that
+The equation \eqref{eq1} is also the symbolic expression of $g'$, result of symbolic differentiation. As we can see, the symbolic expression can be quite long and tedious. If the function gets more complicated, the computation can be inefficient. For example, $f$ consists of long compositions or and even takes a vector as input. Thus, we summarize that
 - automatic differentiation is not finite-difference differentiation, and that
 - automatic differentiation is not symbolic differentiation.
 
@@ -210,7 +210,7 @@ y & = f(x_1,x_2) \\
 & = w_7
 \end{aligned}
 $$
-Then the operation steps to compute $f(x_1,x_2)$ are
+Then the operation steps to compute $y=f(x_1,x_2)$ are
 $$
 \begin{aligned}
 w_1 & = x_1 \\
@@ -230,6 +230,19 @@ $$
 & = \left(\frac{\partial y}{\partial w_6}\left(\frac{\partial w_6}{\partial w_5}\left(\frac{\partial w_5}{\partial w_1}\right)\right)\right) + \left(\frac{\partial y}{\partial w_4}\left(\frac{\partial w_4}{\partial w_1}\right)\right) \\
 & = 1\times\exp(w_5)\times w_3 + 1\times\cos(w_1) \\
 & = \exp(w_5)\cos(w_2) + \cos(w_1) \\
+& = \exp(x_1\cos(x_2)) + \cos(x_1)
+\end{aligned}
+$$
+In reverse mode, we compute the partial derivative like
+$$
+\begin{aligned}
+\frac{\partial y}{\partial w_1} & = \left(\frac{\partial y}{\partial w_6}\right)\frac{\partial w_6}{\partial w_1} + \left(\frac{\partial y}{\partial w_4}\right)\frac{\partial w_4}{\partial w_1} \\
+& = 1\times\frac{\partial w_6}{\partial w_1} + 1\times \frac{\partial w_4}{\partial w_1} \\
+& = \left(\frac{\partia w_6}{\partial w_5})\frac{\partial w_5}{\partial w_1} + \cos(w_1) \\
+& = \exp(w_5)\frac{\partial w_5}{\partial w_1} + \cos(w_1) \\ 
+& = \exp(w_5)\left(\frac{\partial w_5}{\partial w_1}\right) + \cos(w_1) \\ 
+& = \exp(w_5)w_3 + \cos(w_1) \\ 
+& = \exp(w_5)\cos(w_2) + \cos(w_1) \\ 
 & = \exp(x_1\cos(x_2)) + \cos(x_1)
 \end{aligned}
 $$
