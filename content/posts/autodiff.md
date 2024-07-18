@@ -225,9 +225,7 @@ $$
 Forward-mode automatic differentiation computes the partial derivative of $y$ with respect to $w_1=x_1$ by
 $$
 \begin{aligned}
-\frac{\partial y}{\partial w_1} & = \frac{\partial y}{\partial w_6}\frac{\partial w_6}{\partial w_1} + \frac{\partial y}{\partial w_4}\frac{\partial w_4}{\partial w_1} \\
-& = \frac{\partial y}{\partial w_6}\frac{\partial w_6}{\partial w_5}\frac{\partial w_5}{\partial w_1} + \frac{\partial y}{\partial w_4}\frac{\partial w_4}{\partial w_1} \\
-& = \left(\frac{\partial y}{\partial w_6}\left(\frac{\partial w_6}{\partial w_5}\left(\frac{\partial w_5}{\partial w_1}\right)\right)\right) + \left(\frac{\partial y}{\partial w_4}\left(\frac{\partial w_4}{\partial w_1}\right)\right) \\
+\frac{\partial y}{\partial w_1} & = \left(\frac{\partial y}{\partial w_6}\left(\frac{\partial w_6}{\partial w_5}\left(\frac{\partial w_5}{\partial w_1}\right)\right)\right) + \left(\frac{\partial y}{\partial w_4}\left(\frac{\partial w_4}{\partial w_1}\right)\right) \\
 & = 1\times\exp(w_5)\times w_3 + 1\times\cos(w_1) \\
 & = \exp(w_5)\cos(w_2) + \cos(w_1) \\
 & = \exp(x_1\cos(x_2)) + \cos(x_1)
@@ -238,7 +236,7 @@ $$
 \begin{aligned}
 \frac{\partial y}{\partial w_1} & = \left(\frac{\partial y}{\partial w_6}\right)\frac{\partial w_6}{\partial w_1} + \left(\frac{\partial y}{\partial w_4}\right)\frac{\partial w_4}{\partial w_1} \\
 & = 1\times\frac{\partial w_6}{\partial w_1} + 1\times \frac{\partial w_4}{\partial w_1} \\
-& = \left(\frac{\partia w_6}{\partial w_5}\right)\frac{\partial w_5}{\partial w_1} + \cos(w_1) \\
+& = \left(\frac{\partial w_6}{\partial w_5}\right)\frac{\partial w_5}{\partial w_1} + \cos(w_1) \\
 & = \exp(w_5)\frac{\partial w_5}{\partial w_1} + \cos(w_1) \\ 
 & = \exp(w_5)\left(\frac{\partial w_5}{\partial w_1}\right) + \cos(w_1) \\ 
 & = \exp(w_5)w_3 + \cos(w_1) \\ 
