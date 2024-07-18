@@ -226,7 +226,8 @@ Forward-mode automatic differentiation computes the partial derivative of $y$ wi
 $$
 \begin{aligned}
 \frac{\partial y}{\partial w_1} & = \frac{\partial y}{\partial w_6}\frac{\partial w_6}{\partial w_1} + \frac{\partial y}{\partial w_4}\frac{\partial w_4}{\partial w_1} \\
-& = \frac{\partial y}{\partial w_6}\frac{\partial w_6}{\partial w_5}\frac{\partial w_5}{\partial w_1} + \frac{\partial y}{\partial w_4}\cos(w_1) \\
+& = \frac{\partial y}{\partial w_6}\frac{\partial w_6}{\partial w_5}\frac{\partial w_5}{\partial w_1} + \frac{\partial y}{\partial w_4}\frac{\partial w_4}{\partial w_1} \\
+& = \left(\frac{\partial y}{\partial w_6}\left(\frac{\partial w_6}{\partial w_5}\left(\frac{\partial w_5}{\partial w_1}\right)\right)\right) + \left(\frac{\partial y}{\partial w_4}\left(\frac{\partial w_4}{\partial w_1}\right)\right) \\
 & = 1\times\exp(w_5)\times w_3 + 1\times\cos(w_1) \\
 & = \exp(w_5)\cos(w_2) + \cos(w_1) \\
 & = \exp(x_1\cos(x_2)) + \cos(x_1)
