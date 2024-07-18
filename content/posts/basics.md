@@ -4,6 +4,9 @@ date: 2024-02-01T10:20:33+08:00
 draft: false
 ---
 
+## Update log
+- 2024-07-18: Use new code example
+
 ## Outline
 In this post, we mention some important concepts in deep learning, including
 - artificial neural network
