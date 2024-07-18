@@ -233,13 +233,13 @@ $$
 & = \frac{\partial y}{\partial w_5}\frac{\partial w_5}{\partial w_1} + \frac{\partial y}{\partial w_4}\frac{\partial w_4}{\partial w_1} \\
 & = \frac{\partial y}{\partial w_5}w_3 + \frac{\partial y}{\partial w_4}\cos(w_1) \\
 & = \frac{\partial y}{\partial w_6}\frac{\partial w_6}{\partial w_5}w_3 + 1\times\cos(w_1) \\
-& = \frac{\partial y}{\partial w_6}\exp(w_5)\cos(w_2)  1\times\cos(w_1) \\
+& = \frac{\partial y}{\partial w_6}\exp(w_5)\cos(w_2) + 1\times\cos(w_1) \\
 & = 1\times\exp(w_5)\times w_3 + 1\times\cos(w_1) \\
 & = \exp(w_5)\cos(w_2) + \cos(w_1) \\
 & = \exp(x_1\cos(x_2)) + \cos(x_1).
 \end{aligned}
 $$
-In reverse mode, we compute the partial derivative like
+The reverse mode computes the partial derivative in this way
 $$
 \begin{aligned}
 \frac{\partial y}{\partial w_1} & = \left(\frac{\partial y}{\partial w_6}\right)\frac{\partial w_6}{\partial w_1} + \left(\frac{\partial y}{\partial w_4}\right)\frac{\partial w_4}{\partial w_1} \\
@@ -252,3 +252,6 @@ $$
 & = \exp(x_1\cos(x_2)) + \cos(x_1).
 \end{aligned}
 $$
+In other words, the operations to obtain the partial derivative can orderedly summarized
+| Forward | Reverse |
+| $test$ | $test$ |
