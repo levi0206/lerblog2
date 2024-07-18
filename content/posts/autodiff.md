@@ -119,7 +119,7 @@ The equation \eqref{eq1} is also the symbolic expression of $g'$, result of symb
 - automatic differentiation is not symbolic differentiation.
 
 ## Automatic Differentiation
-### Start with intuition
+### Start with an easy example
 Let first consider a composition function $f$ without specifying its domain and co-domain
 $$
 f(x) = f_n(f_{n-1}(\ldots f_1(x)))
@@ -281,6 +281,6 @@ In other words, the operations to obtain the partial derivative can be summarize
     \end{aligned}
     $$
 
-Now we present the calculation in **computational graphs**. The procedure of the forward-mode automatic differentiation can be expressed as the graph
-
+Now we present the calculation in **computational graphs**. The process of the forward-mode automatic differentiation can be expressed as the graph
 ![png](https://levi0206.github.io/lerblog2/autodiff/forward.png)
+Note that this is the graph for the partial derivative of $y$ with respect to $x_1$. Thus, if your model takes a $n$-dimensional vector as input, then you have to traverse the graph for $n$ times, which is extremely slow and inefficient for the optimization of deep-learning models.
