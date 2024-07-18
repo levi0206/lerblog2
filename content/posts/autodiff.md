@@ -8,10 +8,10 @@ Automatic differentiation, or AD, is crucial in deep learning and widely used in
 
 ## Outline
 - Numerical differentiation and symbolic differentiation
-- Forward mode and reverse mode of automatic differentiation
+- Automatic differentiation
 - Computational graph illustration
 
-## What Automatic Differentiation is not?
+## Numerical differentiation and symbolic differentiation
 It must be clarified that the automatic differentiation is **not numerical differentiation**, which calculates the derivative of $f$ using definition
 $$
 \frac{d}{dx}f(x) \approx \frac{f(x+h)-f(x)}{h}, \quad h \text{ small},
