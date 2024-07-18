@@ -190,7 +190,7 @@ $$
 $$
 Conversely, if $|\mathbf{c}|\leq|\mathbf{b}|\leq|\mathbf{a}|\leq|\mathbf{x}|$. For instance, $f$ is vector-input-scalar-output; then the reverse mode is more efficient. However, there's an intuitive way of seeing this. Let $\mathbf{x}$ be a vector and let $f$ output a scalar. Suppose the output of $f_i$ is a vevtor. Then the forward-mode AD performs matrix-matrix products, while the reverse mode performs vector-matrix products, much more efficient than the forward mode, which gives the reason why in practice, we always use reverse-mode AD because the loss function is typically a real-valued function taking a vector as input.
 
-### Toy example
+### General formula
 Let's start with a toy example. Consider $f:\mathbb{R}^2\to\mathbb{R}$
 $$
 \begin{aligned}
@@ -263,8 +263,19 @@ In other words, the operations to obtain the partial derivative can orderedly su
     and if there are predecessors of $\dot{w_i}$, then we obtain $\dot{w_i}$ by
     $$
     \begin{aligned}
-        \dot{w_i} = \sum_{j\in\{\text{predecessors of i}\}} \frac{\partial w_i}{\partial w_j}\dot{w_j}; \\
+        \dot{w_i} = \sum_{j\in\{\text{predecessors of i}\}} \frac{\partial w_i}{\partial w_j}\dot{w_j} \,; \\
     \end{aligned}
     $$
 - in the forward mode,
-    - we calculate
+    - we calculate the partial derivative of $y$ with respect to the previous node
+    $
+    \begin{aligned}
+        \dot{w_i} = \frac{\partial y}{\partial w_i} \\
+    \end{aligned}
+    $$
+    and if there are successors of $\dot{w_i}$, then we obtain $\dot{w_i}$ by
+    $$
+    \begin{aligned}
+        \dot{w_i} = \sum_{j\in\{\text{successors of i}\}} \dot{w_j}\frac{\partial w_j}{\partial w_i}. \\
+    \end{aligned}
+    $$
