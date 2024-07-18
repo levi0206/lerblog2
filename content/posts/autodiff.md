@@ -12,7 +12,7 @@ Automatic differentiation, or AD, is crucial in deep learning and widely used in
 - Computational graph illustration
 
 ## What Automatic Differentiation is not?
-It must be clarified that the automatic differentiation is not numerical differentiation, which calculates the derivative of $f$ using definition
+It must be clarified that the automatic differentiation is **not numerical differentiation**, which calculates the derivative of $f$ using definition
 $$
 \frac{d}{dx}f(x) \approx \frac{f(x+h)-f(x)}{h}, \quad h \text{ small},
 $$
@@ -27,19 +27,15 @@ $$
 Now we calculate the exact derivative and the estimated derivative using foward-difference method:
 ```
 def g(x):
-    return np.exp(-3*np.cos(4*x)**2)
+    return x + np.exp(-3 * np.cos(4 * x)**2)
 
 # Exact derivative
 def dgdx(x):
-    return 24*np.exp((-3)*np.cos(4*x)**2)*np.cos(4*x)*np.sin(4*x)
+    return 1 + 24 * np.exp(-3 * np.cos(4 * x)**2) * np.cos(4 * x) * np.sin(4 * x)
 
 # Forward difference with stepsize h
 def forward_diff(f, x, h):
-    return (f(x+h)-f(x))/h
-def backward_diff(f, x, h):
-    return (f(x)-f(x-h))/h
-def centered_diff(f, x, h):
-    return (f(x+h)-f(x-h))/2*h
+    return (f(x + h) - f(x)) / h
 
 x = np.linspace(0, 2, 1000)
 hs = np.logspace(-13, 1, 1000)
@@ -48,7 +44,7 @@ errs = np.zeros(len(hs))
 
 for i, h in enumerate(hs):
     # Compuate the difference and store L2 norm of error
-    err = forward_diff(g, x, h)-dgdx(x) 
+    err = forward_diff(g, x, h) - dgdx(x) 
     errs[i] = np.linalg.norm(err) 
 
 # Plot
@@ -63,6 +59,62 @@ plt.tight_layout()
 The $L_2$ norm error of $g_{exact}'$ and $g_{FD}'$ with the change of stepsize is given by
 ![png](https://levi0206.github.io/lerblog2/autodiff/finite_diff.png)
 
+The choice of approximation scheme also affects the error.
+```
+def g(x):
+    return x + np.exp(-3 * np.cos(4 * x)**2)
+
+def dgdx(x):
+    return 1 + 24 * np.exp(-3 * np.cos(4 * x)**2) * np.cos(4 * x) * np.sin(4 * x)
+
+def forward_diff(f, x, h):
+    return (f(x + h) - f(x)) / h
+
+def backward_diff(f, x, h):
+    return (f(x) - f(x - h)) / h
+
+def centered_diff(f, x, h):
+    return (f(x + h) - f(x - h)) / (2 * h)
+
+x = np.linspace(0, 2, 1000)
+hs = np.logspace(-13, 1, 1000)
+
+ferrs = np.zeros(len(hs))
+berrs = np.zeros(len(hs))
+cerrs = np.zeros(len(hs))
+
+for i, h in enumerate(hs):
+    ferr = forward_diff(g, x, h) - dgdx(x)  
+    ferrs[i] = np.linalg.norm(ferr)  # store L2 norm of error
+    berr = backward_diff(g, x, h) - dgdx(x)  
+    berrs[i] = np.linalg.norm(berr)  # store L2 norm of error
+    cerr = centered_diff(g, x, h) - dgdx(x)  
+    cerrs[i] = np.linalg.norm(cerr)  # store L2 norm of error
+
+fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+
+ax[0].plot(hs, ferrs, label='Forward Difference')
+ax[0].plot(hs, cerrs, label='Centered Difference')
+ax[0].set_xscale('log')
+ax[0].set_yscale('log')
+ax[0].set_xlabel('h', fontsize=12)
+ax[0].set_ylabel(r'$\|g^{\prime}_{FD}-g^{\prime}_{exact}\|_{L_2}$', fontsize=14)
+ax[0].tick_params(labelsize=12)
+ax[0].legend()
+
+ax[1].plot(hs, berrs, label='Backward Difference')
+ax[1].plot(hs, cerrs, label='Centered Difference')
+ax[1].set_xscale('log')
+ax[1].set_yscale('log')
+ax[1].set_xlabel('h', fontsize=12)
+ax[1].set_ylabel(r'$\|g^{\prime}_{BD}-g^{\prime}_{exact}\|_{L_2}$', fontsize=14)
+ax[1].tick_params(labelsize=12)
+ax[1].legend()
+
+plt.tight_layout()
+plt.show()
+```
+![png](https://levi0206.github.io/lerblog2/autodiff/finite_diff_compare.png)
 ## Automatic Differentiation
 Let first consider a composition function $f$ without specifying its domain and co-domain
 $$
