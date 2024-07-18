@@ -344,7 +344,7 @@ In this post, we discussed several key concepts in deep learning, including arti
 
 Hope the readers unedrstand these essential ingredients in almost every deep-learning models.
 
-# References
+## References
 [1] Srivastava, Nitish, Geoffrey E, Hinton, Alex, Krizhevsky, Ilya, Sutskever, Ruslan, Salakhutdinov. "Dropout: a simple way to prevent neural networks from overfitting". Journal of machine learning research 15. 1(2014): 1929–1958.
 
 [2] Zhou, Ding-Xuan. "Universality of Deep Convolutional Neural Networks.". CoRR abs/1805.10769. (2018).

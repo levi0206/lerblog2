@@ -2,6 +2,7 @@
 title: "Understand Automatic Differentiation"
 date: 2024-07-17T00:00:42+08:00
 draft: false
+ShowToc: true
 ---
 
 Automatic differentiation, or AD, is crucial in deep learning and widely used in almost every neural network optimization because it enables the efficient and accurate computation of gradients, which are essential for training models through techniques such as gradient descent. It has been integrated into many deep-learning frameworks such as PyTorch and TensorFlow, allowing users to perform AD on neural networks with just a few lines of code. This post aims to clarify concepts such as forward mode, reverse mode, and computational graphs, though from an engineering perspective, it is still possible to build models without a deep understanding of automatic differentiation.
