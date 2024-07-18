@@ -23,7 +23,9 @@ g(x) = \exp((-3)\cos^2(4x))
 $$
 with derivative
 $$
-\frac{dg}{dx} = 24*\exp((-3)\cos^2(4x))*\cos(4x)*\sin(4x).
+\begin{equation}
+\frac{dg}{dx} = 24*\exp((-3)\cos^2(4x))*\cos(4x)*\sin(4x) \label{eq1}\tag{1}
+\end{equation}
 $$
 Now we calculate the exact derivative and the estimated derivative using foward-difference method:
 ```python
@@ -116,6 +118,10 @@ plt.tight_layout()
 plt.show()
 ```
 ![png](https://levi0206.github.io/lerblog2/autodiff/finite_diff_compare.png)
+
+The equation [1](#mjx-eqn-eq1) is also the symbolic expression of $g$, result of symbolic differentiation. As we can see, the symbolic expression can be quite long and tedious. If the function gets more complicated, the computation can be inefficient. For example, $f$ consists of long compositions or and even takes a vector as input. Thus, we summarize that
+- automatic differentiation is not finite-difference differentiation, and that
+- automatic differentiation is not symbolic differentiation.
 ## Automatic Differentiation
 Let first consider a composition function $f$ without specifying its domain and co-domain
 $$
