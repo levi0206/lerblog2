@@ -293,7 +293,8 @@ for i in range(n_epoch):
     if (i+1)%100==0:
         print("Epoch {} loss {:.4f} acc {:.2f}%".format(i+1, loss, acc))
 ```
-
+Training log:
+```
     Epoch 100 loss 0.6060 acc 62.00%
     Epoch 200 loss 0.4755 acc 69.70%
     Epoch 300 loss 0.3889 acc 78.20%
@@ -304,7 +305,8 @@ for i in range(n_epoch):
     Epoch 800 loss 0.2329 acc 92.40%
     Epoch 900 loss 0.2216 acc 92.50%
     Epoch 1000 loss 0.2125 acc 92.90%
-
+```
+The performance of the model gradually increases as the figure shown below.
 ```python
 # Plot Loss
 plt.subplot(1, 2, 1)
@@ -326,7 +328,7 @@ plt.tight_layout()
 plt.show()
 ```
     
-![png](https://levi0206.github.io/lerblog2/basics/Basics_24_0.png)
+![png](https://levi0206.github.io/lerblog2/basics/loss_acc.png)
     
 
 # References
