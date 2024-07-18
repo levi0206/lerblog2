@@ -252,6 +252,19 @@ $$
 & = \exp(x_1\cos(x_2)) + \cos(x_1).
 \end{aligned}
 $$
-In other words, the operations to obtain the partial derivative can orderedly summarized
-| Forward | Reverse |
-| $test$ | $test$ |
+In other words, the operations to obtain the partial derivative can orderedly summarized as:
+- in the forward mode,
+    - we calculate
+    $$
+    \begin{aligned}
+        \dot{w_i} = \frac{\partial w_i}{\partial w_1} \\
+    \end{aligned}
+    $$
+    and if there are predecessors of $\dot{w_i}$, then we obtain $\dot{w_i}$ by
+    $$
+    \begin{aligned}
+        \dot{w_i} = \sum_{j\in\{\text{predecessors of i}\}} \frac{\partial w_i}{\partial w_j}\dot{w_j}; \\
+    \end{aligned}
+    $$
+- in the forward mode,
+    - we calculate
