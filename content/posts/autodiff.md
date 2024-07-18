@@ -119,6 +119,7 @@ The equation \eqref{eq1} is also the symbolic expression of $g'$, result of symb
 - automatic differentiation is not symbolic differentiation.
 
 ## Automatic Differentiation
+### Start with intuition
 Let first consider a composition function $f$ without specifying its domain and co-domain
 $$
 f(x) = f_n(f_{n-1}(\ldots f_1(x)))
@@ -236,7 +237,7 @@ $$
 & = \frac{\partial y}{\partial w_6}\exp(w_5)\cos(w_2) + 1\times\cos(w_1) \\
 & = 1\times\exp(w_5)\times w_3 + 1\times\cos(w_1) \\
 & = \exp(w_5)\cos(w_2) + \cos(w_1) \\
-& = \exp(x_1\cos(x_2)) + \cos(x_1).
+& = \exp(x_1\cos(x_2))\cos(x_2) + \cos(x_1).
 \end{aligned}
 $$
 The reverse mode computes the partial derivative in this way
@@ -249,10 +250,10 @@ $$
 & = \exp(w_5)\left(\frac{\partial w_5}{\partial w_1}\right) + \cos(w_1) \\ 
 & = \exp(w_5)w_3 + \cos(w_1) \\ 
 & = \exp(w_5)\cos(w_2) + \cos(w_1) \\ 
-& = \exp(x_1\cos(x_2)) + \cos(x_1).
+& = \exp(x_1\cos(x_2))\cos(x_2) + \cos(x_1).
 \end{aligned}
 $$
-In other words, the operations to obtain the partial derivative can orderedly summarized as the following:
+In other words, the operations to obtain the partial derivative can be summarized in the "graphical" style:
 - in the forward mode,
     - we calculate
     $$
@@ -279,3 +280,6 @@ In other words, the operations to obtain the partial derivative can orderedly su
         \dot{w_i} = \sum_{j\in\{\text{successors of i}\}} \dot{w_j}\frac{\partial w_j}{\partial w_i}. \\
     \end{aligned}
     $$
+
+Now we present the calculation in **computational graphs**. The procedure of the forward-mode automatic differentiation can be expressed as the graph
+![png](https://levi0206.github.io/lerblog2/autodiff/forward.png)
