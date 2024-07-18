@@ -7,11 +7,6 @@ ShowToc: true
 
 Automatic differentiation, or AD, is crucial in deep learning and widely used in almost every neural network optimization because it enables the efficient and accurate computation of gradients, which are essential for training models through techniques such as gradient descent. It has been integrated into many deep-learning frameworks such as PyTorch and TensorFlow, allowing users to perform AD on neural networks with just a few lines of code. This post aims to clarify concepts such as forward mode, reverse mode, and computational graphs, though from an engineering perspective, it is still possible to build models without a deep understanding of automatic differentiation.
 
-## Outline
-- Numerical differentiation and symbolic differentiation
-- Automatic differentiation
-- Computational graph illustration
-
 ## Numerical differentiation and symbolic differentiation
 It must be clarified that the automatic differentiation is **not numerical differentiation**, which calculates the derivative of $f$ using definition
 $$
@@ -194,3 +189,36 @@ $$
 \frac{|\mathbf{c}|\cdot|\mathbf{a}|}{|\mathbf{x}|\cdot|\mathbf{b}|}\ge\frac{|\mathbf{c}|+|\mathbf{a}|}{|\mathbf{x}|+|\mathbf{b}|}.
 $$
 Conversely, if $|\mathbf{c}|\leq|\mathbf{b}|\leq|\mathbf{a}|\leq|\mathbf{x}|$. For instance, $f$ is vector-input-scalar-output; then the reverse mode is more efficient. However, there's an intuitive way of seeing this. Let $\mathbf{x}$ be a vector and let $f$ output a scalar. Suppose the output of $f_i$ is a vevtor. Then the forward-mode AD performs matrix-matrix products, while the reverse mode performs vector-matrix products, much more efficient than the forward mode, which gives the reason why in practice, we always use reverse-mode AD because the loss function is typically a real-valued function taking a vector as input.
+
+### Toy example
+Let's start with a toy example. Consider $f:\mathbb{R}^2\to\mathbb{R}$
+$$
+\begin{aligned}
+y & = f(x_1,x_2) \\
+& = \exp(x_1\cos(x_2)) + \sin(x_1).
+\end{aligned}
+$$
+Write $f$ in a "chain-like" form
+$$
+\begin{aligned}
+y & = f(x_1,x_2) \\
+& = \exp(x_1\cos(x_2)) + \sin(x_1) \\
+& = \exp(w_1\cos(w_2)) + \sin(w_1) \\
+& = \exp(w_1w_3) + w_4 \\
+& = \exp(w_5) + w_4 \\
+& = w_6 + w_4 \\
+& = w_7
+\end{aligned}
+$$
+Then the operation steps to compute $f(x_1,x_2)$ are
+$$
+\begin{aligned}
+w_1 & = x_1 \\
+w_2 & = x_2 \\
+w_3 & = \cos(w_2) \\
+w_4 & = \sin(w_1) \\
+w_5 & = w_1 * w_3 \\
+w_6 & = \exp(w_5) \\
+w_7 & = w_4 + w_6
+\end{aligned}
+$$
