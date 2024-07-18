@@ -25,7 +25,7 @@ $$
 \frac{dg}{dx} = 24*\exp((-3)\cos^2(4x))*\cos(4x)*\sin(4x).
 $$
 Now we calculate the exact derivative and the estimated derivative using foward-difference method:
-```
+```python
 def g(x):
     return x + np.exp(-3 * np.cos(4 * x)**2)
 
@@ -60,7 +60,7 @@ The $L_2$ norm error of $g_{exact}'$ and $g_{FD}'$ with the change of stepsize i
 ![png](https://levi0206.github.io/lerblog2/autodiff/finite_diff.png)
 
 The choice of approximation scheme also affects the error.
-```
+```python
 def g(x):
     return x + np.exp(-3 * np.cos(4 * x)**2)
 
