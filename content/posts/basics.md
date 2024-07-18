@@ -12,9 +12,9 @@ In this post, we mention some important concepts in deep learning, including
 - artificial neural network
 - automatic differentiation
 - Monte Carlo estimation 
-- minibatch stochastic gradient descent.
+- minibatch stochastic gradient descent,
 
-Given the extensive nature of each subsection, a comprehensive coverage is beyond the scope. Instead, we will pick certain subjects, explain some important ideas and theorems that support these mechanisms, and provide a toy example.
+These tools are fundamental in the modern deep-learning context. Given the extensive nature of each subsection, a comprehensive coverage is beyond the scope. Instead, we will pick certain subjects, explain some important ideas and theorems that support these mechanisms, and provide a toy example.
 
 
 ```python
@@ -332,7 +332,15 @@ plt.show()
 ```
     
 ![png](https://levi0206.github.io/lerblog2/basics/loss_acc.png)
-    
+
+In this post, we discussed several key concepts in deep learning, including artificial neural networks, automatic differentiation, Monte Carlo estimation, and minibatch stochastic gradient descent. Each of these components is crucial for developing and optimizing neural network models.
+
+- **Artificial Neural Networks (ANNs)** form the backbone of deep learning, capable of approximating complex functions, supported by the Universal Approximation Theorem.
+- **Automatic Differentiation** is essential for efficiently computing gradients, fundamental for training neural networks through optimization algorithms like gradient descent.
+- **Monte Carlo Estimation** provides a method for approximating intractable integrals, useful for training models whose loss function includes the calculation of expectations.
+- **Minibatch Stochastic Gradient Descent** balances computational efficiency and convergence speed, as demonstrated in our classifier training example.
+
+Hope the readers unedrstand these essential ingredients in almost every deep-learning models.
 
 # References
 [1] Srivastava, Nitish, Geoffrey E, Hinton, Alex, Krizhevsky, Ilya, Sutskever, Ruslan, Salakhutdinov. "Dropout: a simple way to prevent neural networks from overfitting". Journal of machine learning research 15. 1(2014): 1929–1958.
