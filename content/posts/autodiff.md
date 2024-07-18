@@ -288,3 +288,5 @@ Note that this is the graph for the partial derivative of $y$ with respect to $x
 Here, we understand the difference of the efficiency of the two schemes in a more visible way:
 - The forward mode traverses the computational graph once for each variable;
 - The reverse mode traverses only once and get all the partial derivatives.
+
+## Example: Automatic Differentiation on MLP
