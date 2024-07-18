@@ -4,6 +4,7 @@ date: 2024-02-01T10:20:33+08:00
 draft: false
 ---
 
+## Outline
 In this post, we mention some important concepts in deep learning, including
 - artificial neural network
 - automatic differentiation
