@@ -238,7 +238,7 @@ $$
 \begin{aligned}
 \frac{\partial y}{\partial w_1} & = \left(\frac{\partial y}{\partial w_6}\right)\frac{\partial w_6}{\partial w_1} + \left(\frac{\partial y}{\partial w_4}\right)\frac{\partial w_4}{\partial w_1} \\
 & = 1\times\frac{\partial w_6}{\partial w_1} + 1\times \frac{\partial w_4}{\partial w_1} \\
-& = \left(\frac{\partia w_6}{\partial w_5})\frac{\partial w_5}{\partial w_1} + \cos(w_1) \\
+& = \left(\frac{\partia w_6}{\partial w_5}\right)\frac{\partial w_5}{\partial w_1} + \cos(w_1) \\
 & = \exp(w_5)\frac{\partial w_5}{\partial w_1} + \cos(w_1) \\ 
 & = \exp(w_5)\left(\frac{\partial w_5}{\partial w_1}\right) + \cos(w_1) \\ 
 & = \exp(w_5)w_3 + \cos(w_1) \\ 
