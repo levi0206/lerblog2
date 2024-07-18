@@ -257,7 +257,7 @@ In other words, the operations to obtain the partial derivative can orderedly su
     - we calculate
     $$
     \begin{aligned}
-        \dot{w_i} = \frac{\partial w_i}{\partial w_1} \\
+        \dot{w_i} = \frac{\partial w_i}{\partial w_1}, \\
     \end{aligned}
     $$
     and if there are predecessors of $\dot{w_i}$, then we obtain $\dot{w_i}$ by
@@ -266,11 +266,11 @@ In other words, the operations to obtain the partial derivative can orderedly su
         \dot{w_i} = \sum_{j\in\{\text{predecessors of i}\}} \frac{\partial w_i}{\partial w_j}\dot{w_j} \,; \\
     \end{aligned}
     $$
-- in the forward mode,
+- in the reverse mode,
     - we calculate the partial derivative of $y$ with respect to the previous node
     $$
     \begin{aligned}
-        \dot{w_i} = \frac{\partial y}{\partial w_i} \\
+        \dot{w_i} = \frac{\partial y}{\partial w_i}, \\
     \end{aligned}
     $$
     and if there are successors of $\dot{w_i}$, then we obtain $\dot{w_i}$ by
