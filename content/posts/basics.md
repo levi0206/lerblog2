@@ -2,9 +2,10 @@
 title: "Deep Learning Basics"
 date: 2024-02-01T10:20:33+08:00
 draft: false
+ShowToc: true
 ---
 
-## Update log
+### Updating log
 - 2024-07-18: Use new code example
 
 ## Outline
