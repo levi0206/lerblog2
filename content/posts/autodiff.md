@@ -283,5 +283,8 @@ In other words, the operations to obtain the partial derivative can be summarize
 
 Now we present the calculation in **computational graphs**. The process of the forward-mode automatic differentiation can be expressed as the graph
 ![png](https://levi0206.github.io/lerblog2/autodiff/forward.png)
-Note that this is the graph for the partial derivative of $y$ with respect to $x_1$. Thus, if your model takes a $n$-dimensional vector as input, then you have to traverse the graph for $n$ times, which is extremely slow and inefficient for the optimization of deep-learning models. In contrast, we only use **one** traversal to obtain the partial derivatives of **both** $x_1$ and $x_2$. Additionally, it's worth of noting that the partial derivatives $\frac{\partial w_j}{\partial w_i}$ are evaluated in the forward traversal. 
+Note that this is the graph for the partial derivative of $y$ with respect to $x_1$. Thus, if your model takes a $n$-dimensional vector as input, then you have to traverse the graph for $n$ times, which is extremely slow and inefficient for the optimization of deep-learning models. In contrast, we only use **one** traversal to obtain the partial derivatives of **both** $x_1$ and $x_2$ in the reverse mode. Also, it's worth of noting that the partial derivatives $\frac{\partial w_j}{\partial w_i}$ are evaluated in the forward traversal. 
 ![png](https://levi0206.github.io/lerblog2/autodiff/reverse.png)
+Here, we understand the difference of the efficiency of the two schemes in a more visible way:
+- The forward mode traverses the computational graph once for each variable;
+- The reverse mode traverses only once and get all the partial derivatives.
