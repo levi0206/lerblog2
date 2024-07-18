@@ -252,7 +252,7 @@ $$
 & = \exp(x_1\cos(x_2)) + \cos(x_1).
 \end{aligned}
 $$
-In other words, the operations to obtain the partial derivative can orderedly summarized as:
+In other words, the operations to obtain the partial derivative can orderedly summarized as the following:
 - in the forward mode,
     - we calculate
     $$
@@ -268,7 +268,7 @@ In other words, the operations to obtain the partial derivative can orderedly su
     $$
 - in the forward mode,
     - we calculate the partial derivative of $y$ with respect to the previous node
-    $
+    $$
     \begin{aligned}
         \dot{w_i} = \frac{\partial y}{\partial w_i} \\
     \end{aligned}
