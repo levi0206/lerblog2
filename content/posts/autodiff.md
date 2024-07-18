@@ -219,6 +219,16 @@ w_3 & = \cos(w_2) \\
 w_4 & = \sin(w_1) \\
 w_5 & = w_1 * w_3 \\
 w_6 & = \exp(w_5) \\
-w_7 & = w_4 + w_6
+w_7 & = w_6 + w_4
+\end{aligned}
+$$
+Forward-mode automatic differentiation computes the partial derivative of $y$ with respect to $w_1=x_1$ by
+$$
+\begin{aligned}
+\frac{\partial y}{\partial w_1} & = \frac{\partial y}{\partial w_6}\frac{\partial w_6}{\partial w_1} + \frac{\partial y}{\partial w_4}\frac{\partial w_4}{\partial w_1} \\
+& = \frac{\partial y}{\partial w_6}\frac{\partial w_6}{\partial w_5}\frac{\partial w_5}{\partial w_1} + \frac{\partial y}{\partial w_4}\cos(w_1) \\
+& = 1\times\exp(w_5)\times w_3 + 1\times\cos(w_1) \\
+& = \exp(w_5)\cos(w_2) + \cos(w_1) \\
+& = \exp(x_1\cos(x_2)) + \cos(x_1)
 \end{aligned}
 $$
