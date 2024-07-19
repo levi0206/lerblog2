@@ -163,7 +163,7 @@ $$
 \vdots & \ddots & \vdots \\
 \frac{df_{n_3}}{dx_1} & \dots & \frac{df_{n_3}}{dx_n}
 \end{matrix}
-\right] \in\mathbb{R}^{n_3\times n}
+\right] \quad {(\text{$n_3\times n$} matrix)}
 $$
 can be obtained by a product of Jacobian matrices
 $$
@@ -361,4 +361,9 @@ $$
 \dot{\mathbf{b}^1} & = \dot{\mathbf{z}_1}
 \end{aligned}
 $$
-## Example: Backpropagation through Time
+## Summary
+In this post, we cover the following concepts:
+- When the loss function accepts a vector as input and outputs a scalar, the forward mode of differentiation involves matrix-matrix products, whereas the reverse mode involves vector-matrix products. This makes the reverse mode more commonly used and efficient in most deep learning applications.
+- By storing the partial derivatives during the forward pass, the reverse mode can obtain the partial derivatives of all variables in a single traversal.
+
+Additionally, we walk through the backpropagation process of a neural network step-by-step, providing readers with a clear understanding of how the process works.
