@@ -338,12 +338,9 @@ $$
 You can draw the graph yourself. The computation can be represented in the vector form
 $$
 \begin{aligned}
-\mathbf{h}^1 & = \mathbf{W}^1\mathbf{x}+\mathbf{b}_1 \, \in\mathbb{R}^4 \\
-\mathbf{z}_1 & = \mathbf{h}^1 \\
-\mathbf{h}^2 & = \mathbf{W}^2\mathbf{z}_1+\mathbf{b}_2 \, \in\mathbb{R}^2 \\
-\mathbf{z}_2 & = \mathbf{h}^2 \\
-h^3 & = \mathbf{W}^3\mathbf{z}_2+b_3 \, \in\mathbb{R} \\
-z_3 & = h_3 \\
+\mathbf{z}_1 & = \mathbf{W}^1\mathbf{x}+\mathbf{b}_1 \, \in\mathbb{R}^4 \\
+\mathbf{z}_2 & = \mathbf{W}^2\mathbf{z}_1+\mathbf{b}_2 \, \in\mathbb{R}^2 \\
+z_3 & = \mathbf{W}^3\mathbf{z}_2+b_3 \, \in\mathbb{R} \\
 \hat{y} & = \sigma(z_3) \\
 L & = (\hat{y}-y)^2
 \end{aligned}
