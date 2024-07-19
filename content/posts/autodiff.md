@@ -290,22 +290,22 @@ Here, we understand the difference of the efficiency of the two schemes in a mor
 - The backpropagation traverses only once and gets all the partial derivatives.
 
 ## Example: Backpropagation on MLP
-Suppose we perform a binary classification task using a multilayer perceptron $\text{MLP}$ with three hidden layers. Let $x\in\mathbb{R}^4$ and suppose
+Suppose we perform a binary classification task using a neural network with three hidden layers. Let $x\in\mathbb{R}^4$ be a $4$-dimensional column vector and suppose
 - the first hidden layer consist of $4$ node;
 - the second one consist of $2$ nodes;
 - a sigmoid function $\sigma$ is applied after the second hidden layer.
 
-Namely, it is a function $\text{MLP}:\mathbb{R}^4\to\mathbb{R}$ defined by
+Namely, it is a function $\text{NN}:\mathbb{R}^4\to\mathbb{R}$ defined by
 $$
 \begin{aligned}
-\text{MLP}(x) & = \sigma \circ N_3 \circ N_2 \circ N_1 (x) \\
+\text{NN}(x) & = \sigma \circ N_3 \circ N_2 \circ N_1 (x) \\
 N_1(x) & = W^1 x + b^1, \quad W^1\in\mathbb{R}^{4\times 4}, b^1\in\mathbb{R}^4 \\
 N_2(x) & = W^2 x + b^2, \quad W^2\in\mathbb{R}^{4\times 2}, b^2\in\mathbb{R}^2 \\
 N_3(x) & = W^3 x + b^3, \quad W^2\in\mathbb{R}^{2\times 1}, b^3\in\mathbb{R} \\
 \sigma(x) & = \frac{1}{1+e^{-x}}.
 \end{aligned}
 $$
-Define the loss function
+where $W^n=(w^n_{i,j})$. Define the loss function
 $$
 \begin{aligned}
 z_1 & = N_1(x) = W^1x+ b^1\\
@@ -317,5 +317,25 @@ L & = (\hat{y}-y)^2.
 $$
 The forward pass of $L$ is like
 ![png](https://levi0206.github.io/lerblog2/autodiff/MLP_forward.png)
-Now we walk through the "propagation" process:
+For simplicity, let's rewrite $z_{i,1}\sum_{k=1}^4 h^i_{1,k}$ and $z_3=h^3_1+h^3_2$.
+![png](https://levi0206.github.io/lerblog2/autodiff/NN_hidden.png)
+Now we walk through the propagation process of $\frac{\partial L}{\partial x_1}$:
+$$
+\begin{aligned}
+\dot{\hat{y}} & = \frac{\partial L}{\partial \hat{y}} = 2(\hat{y}-y) \\
+\dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma(z_{3})' \\
+\dot{h^3_1} & = \frac{\partial L}{\partial h^3} = \dot{z_3} \cdot 1
+\dot{w^3_{1,1}} & = \frac{\partial L}{\partial w^3_{1,1}} = \dot{h^3_1}z_{2,1} \\
+\dot{b_{3,1}} & = \frac{\partial L}{\partial b_{3,1}} = \dot{h^3_1} \cdot 1
+\dot{z_{2,1}} & = \frac{\partial L}{\partial z_{2,1}} = \dot{h^3_1}w^3_{1,1} \\
+\dot{h^2_{1,1}} & = \frac{\partial L}{\partial h^2_{1,1}} = \dot{z_{2,1}} \cdot 1 \\
+\dot{w^2_{1,1}} & = \frac{\partial L}{\partial w^2_{1,1}} = \dot{h^2_{1,1}}z_{1,1} \\
+\dot{b^2_{1,1}} & = \frac{\partial L}{\partial b^2_{1,1}} = \dot{h^2_{1,1}} \\
+\dot{z_{1,1}} & = \frac{\partial L}{\partial z_{1,1}} = \dot{h^2_{1,1}}w^2_{1,1} \\
+\dot{h^{1,1}} & = \frac{\partial L}{\partial h^1_{1,1}} = \dot{z_{1,1}} \cdot 1 \\
+\dot{w^1_{1,1}} & = \frac{\partial L}{\partial w^1_{1,1}} = \dot{h^1_{1,1}}x_1 \\
+\dot{b^1_{1,1}} & = \frac{\partial L}{\partial b^1_{1,1}} = \dot{h^1_{1,1}} \\
+\dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{h^{1,1}}w_{1,1}
+\end{aligned}
+$$
 ## Example: Backpropagation through Time
