@@ -353,10 +353,10 @@ $$
 \dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma'(z_{3}) \\
 \dot{\mathbf{W}^3} & = \dot{z_3} \mathbf{z}_2^\top \quad \text{(row vector)} \\
 \dot{b^3} & = \dot{z_3} \\
-\dot{\mathbf{z}_2} & = \dot{z_3}{\mathbf{W}^3}^\top \quad \text{(column vector)} \\
+\dot{\mathbf{z}_2} & = \mathbf{W}^3\dot{z_3}^\top \quad \text{(row vector)} \\
 \dot{\mathbf{W}^2} & = \dot{\mathbf{z}_2}\mathbf{z}_1^\top \quad \text{($2\times 4$ matrix)}\\
 \dot{\mathbf{b}^2} & = \dot{\mathbf{z}_2} \\
-\dot{\mathbf{z}_1} & = {\mathbf{W}^2}^\top\dot{\mathbf{z}_2} \text{(column vector)} \\
+\dot{\mathbf{z}_1} & = \mathbf{W}^2\dot{\mathbf{z}_2}^\top \quad \text{(row vector)} \\
 \dot{\mathbf{W}^1} & = \dot{\mathbf{z}_1}\mathbf{x}^\top \\
 \dot{\mathbf{b}^1} & = \dot{\mathbf{z}_1}
 \end{aligned}
