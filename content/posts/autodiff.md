@@ -290,7 +290,7 @@ Here, we understand the difference of the efficiency of the two schemes in a mor
 - The backpropagation traverses only once and gets all the partial derivatives.
 
 ## Example: Backpropagation on MLP
-Suppose we perform a binary classification task using a multilayer perceptron \(MLP\) with two hidden layers. Let $x\in\mathbb{R}^4$ and suppose
+Suppose we perform a binary classification task using a multilayer perceptron $\text{MLP}$ with three hidden layers. Let $x\in\mathbb{R}^4$ and suppose
 - the first hidden layer consist of $4$ node;
 - the second one consist of $2$ nodes;
 - a sigmoid function $\sigma$ is applied after the second hidden layer.
@@ -298,12 +298,22 @@ Suppose we perform a binary classification task using a multilayer perceptron \(
 Namely, it is a function $\text{MLP}:\mathbb{R}^4\to\mathbb{R}$ defined by
 $$
 \begin{aligned}
-\text{MLP}(x) & = \sigma \circ N_2 \circ N_1 (x) \\
-N_1(x) & = W^1 x + b^1, \quad W^1\in\mathbb{R}^{4\times 2}, b^1\in\mathbb{R}^{2} \\
-N_2(x) & = W^2 x + b^2, \quad W^2\in\mathbb{R}^{2\times 1}, b^2\in\mathbb{R} \\
+\text{MLP}(x) & = \sigma \circ N_3 \circ N_2 \circ N_1 (x) \\
+N_1(x) & = W^1 x + b^1, \quad W^1\in\mathbb{R}^{4\times 4}, b^1\in\mathbb{R}^4 \\
+N_2(x) & = W^2 x + b^2, \quad W^2\in\mathbb{R}^{4\times 2}, b^2\in\mathbb{R}^2 \\
+N_3(x) & = W^3 x + b^3, \quad W^2\in\mathbb{R}^{2\times 1}, b^3\in\mathbb{R} \\
 \sigma(x) & = \frac{1}{1+e^{-x}}.
 \end{aligned}
 $$
-
+Define the loss function
+$$
+\begin{aligned}
+z_1 & = N_1(x) = W^1x+ b^1\\
+z_2 & = N_2(z_1) = W^2z_1+ b^2\\
+z_3 & = N_3(z_2) =W^3z_2 + b^3\\
+\hat{y} & = \sigma(z_3)\\
+L & = (\hat{y}-y)^2. 
+\end{aligned}
+$$
 
 ## Example: Backpropagation through Time
