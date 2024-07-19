@@ -324,9 +324,9 @@ $$
 \begin{aligned}
 \dot{\hat{y}} & = \frac{\partial L}{\partial \hat{y}} = 2(\hat{y}-y) \\
 \dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma(z_{3})' \\
-\dot{h^3_1} & = \frac{\partial L}{\partial h^3} = \dot{z_3} \cdot 1
+\dot{h^3_1} & = \frac{\partial L}{\partial h^3} = \dot{z_3} \cdot 1 \\
 \dot{w^3_{1,1}} & = \frac{\partial L}{\partial w^3_{1,1}} = \dot{h^3_1}z_{2,1} \\
-\dot{b_{3,1}} & = \frac{\partial L}{\partial b_{3,1}} = \dot{h^3_1} \cdot 1
+\dot{b_{3,1}} & = \frac{\partial L}{\partial b_{3,1}} = \dot{h^3_1} \cdot 1 \\
 \dot{z_{2,1}} & = \frac{\partial L}{\partial z_{2,1}} = \dot{h^3_1}w^3_{1,1} \\
 \dot{h^2_{1,1}} & = \frac{\partial L}{\partial h^2_{1,1}} = \dot{z_{2,1}} \cdot 1 \\
 \dot{w^2_{1,1}} & = \frac{\partial L}{\partial w^2_{1,1}} = \dot{h^2_{1,1}}z_{1,1} \\
@@ -338,4 +338,5 @@ $$
 \dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{h^{1,1}}w_{1,1}
 \end{aligned}
 $$
+I'm sorry I'm lazy to draw the graph. 
 ## Example: Backpropagation through Time
