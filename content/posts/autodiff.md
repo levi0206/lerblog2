@@ -299,18 +299,18 @@ Namely, it is a function $\text{NN}:\mathbb{R}^4\to\mathbb{R}$ defined by
 $$
 \begin{aligned}
 \text{NN}(x) & = \sigma \circ N_3 \circ N_2 \circ N_1 (x) \\
-N_1(x) & = W^1 x + b^1, \quad W^1\in\mathbb{R}^{4\times 4}, b^1\in\mathbb{R}^4 \\
-N_2(x) & = W^2 x + b^2, \quad W^2\in\mathbb{R}^{4\times 2}, b^2\in\mathbb{R}^2 \\
-N_3(x) & = W^3 x + b^3, \quad W^2\in\mathbb{R}^{2\times 1}, b^3\in\mathbb{R} \\
+N_1(x) & = W^1 x + b^1, \quad \mathbf{W}^1\in\mathbb{R}^{4\times 4}, b^1\in\mathbb{R}^4 \\
+N_2(x) & = W^2 x + b^2, \quad \mathbf{W}^2\in\mathbb{R}^{4\times 2}, b^2\in\mathbb{R}^2 \\
+N_3(x) & = W^3 x + b^3, \quad \mathbf{W}^2\in\mathbb{R}^{2\times 1}, b^3\in\mathbb{R} \\
 \sigma(x) & = \frac{1}{1+e^{-x}}.
 \end{aligned}
 $$
-where $W^n=(w^n_{i,j})$. Define the loss function
+where $\mathbf{W}^n=(w^n_{i,j})$. Define the loss function
 $$
 \begin{aligned}
-z_1 & = N_1(x) = W^1x+ b^1\\
-z_2 & = N_2(z_1) = W^2z_1+ b^2\\
-z_3 & = N_3(z_2) =W^3z_2 + b^3\\
+z_1 & = N_1(x) = \mathbf{W}^1x+ b^1\\
+z_2 & = N_2(z_1) = \mathbf{W}^2z_1+ b^2\\
+z_3 & = N_3(z_2) = \mathbf{W}^3z_2 + b^3\\
 \hat{y} & = \sigma(z_3)\\
 L & = (\hat{y}-y)^2. 
 \end{aligned}
@@ -339,5 +339,16 @@ $$
 \end{aligned}
 $$
 You can draw the graph yourself. The computation can be represented in the vector form
-
+$$
+\begin{aligned}
+\mathbf{h}^1 & = \mathbf{W}^1\mathbf{x}+\mathbf{b}_1 \\
+\mathbf{z}_1 & = \mathbf{h}^1 \\
+\mathbf{h}^2 & = \mathbf{W}^2\mathbf{z}_1+\mathbf{b}_2 \\
+\mathbf{z}_2 & = \mathbf{h}^2 \\
+h^3 & = \mathbf{W}^3\mathbf{z}_2+b_3 \\
+z_3 & = h_3 \\
+\hat{y} & = \sigma(z_3) \\
+L & = (\hat{y}-y)^2
+\end{aligned}
+$$
 ## Example: Backpropagation through Time
