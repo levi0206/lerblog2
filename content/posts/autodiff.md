@@ -335,7 +335,8 @@ $$
 \dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{z_{2,1}}w_{1,1}
 \end{aligned}
 $$
-You can draw the graph yourself. The computation can be represented in the vector form
+You can draw the computational graph yourself. The computation can be represented in the vector form:
+- Forward pass:
 $$
 \begin{aligned}
 \mathbf{z}_1 & = \mathbf{W}^1\mathbf{x}+\mathbf{b}_1 \, \in\mathbb{R}^4 \\
@@ -343,6 +344,16 @@ $$
 z_3 & = \mathbf{W}^3\mathbf{z}_2+b_3 \, \in\mathbb{R} \\
 \hat{y} & = \sigma(z_3) \\
 L & = (\hat{y}-y)^2
+\end{aligned}
+$$
+- Backpropagation
+$$
+\begin{aligned}
+\dot{\hat{y}} & = \frac{\partial L}{\partial \hat{y}} = 2(\hat{y}-y) \\
+\dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma'(z_{3}) \\
+\mathbf{W}^3 & = \dot{z_3} \mathbf{z}_2^\top \\
+b_3 & = \dot{z_3} \\
+\dot{\mathbf{z}_2} & = 
 \end{aligned}
 $$
 ## Example: Backpropagation through Time
