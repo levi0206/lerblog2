@@ -192,7 +192,7 @@ $$
 Conversely, if $|\mathbf{c}|\leq|\mathbf{b}|\leq|\mathbf{a}|\leq|\mathbf{x}|$. For instance, $f$ is vector-input-scalar-output; then the reverse mode is more efficient. However, there's an intuitive way of seeing this. Let $\mathbf{x}$ be a vector and let $f$ output a scalar. Suppose the output of $f_i$ is a vevtor. Then the forward-mode AD performs matrix-matrix products, while the reverse mode performs vector-matrix products, much more efficient than the forward mode, which gives the reason why in practice, we always use reverse-mode AD because the loss function is typically a real-valued function taking a vector as input.
 
 ### General formula
-Let's start with a toy example. Consider $f:\mathbb{R}^2\to\mathbb{R}$
+Let's continue with a slightly complicated function. Consider $f:\mathbb{R}^2\to\mathbb{R}$
 $$
 \begin{aligned}
 y & = f(x_1,x_2) \\
@@ -253,9 +253,9 @@ $$
 & = \exp(x_1\cos(x_2))\cos(x_2) + \cos(x_1).
 \end{aligned}
 $$
-In other words, the operations to obtain the partial derivative can be summarized in the "graphical" style:
-- in the forward mode,
-    - we calculate
+In other words, the operations to obtain the partial derivatives can be summarized in the "graphical" style:
+- **In the forward mode**:
+    - We calculate
     $$
     \begin{aligned}
         \dot{w_i} = \frac{\partial w_i}{\partial w_1}, \\
@@ -267,8 +267,8 @@ In other words, the operations to obtain the partial derivative can be summarize
         \dot{w_i} = \sum_{j\in\{\text{predecessors of i}\}} \frac{\partial w_i}{\partial w_j}\dot{w_j} \,; \\
     \end{aligned}
     $$
-- in the reverse mode,
-    - we calculate the partial derivative of $y$ with respect to the previous node
+- **In the reverse mode**:
+    - We calculate the partial derivative of $y$ with respect to the previous node
     $$
     \begin{aligned}
         \dot{w_i} = \frac{\partial y}{\partial w_i}, \\
@@ -281,19 +281,19 @@ In other words, the operations to obtain the partial derivative can be summarize
     \end{aligned}
     $$
 
-Now we present the calculation in **computational graphs**. The process of the forward-mode automatic differentiation can be expressed as the graph
+Now we present the calculation in computational graphs. The process of forward-mode automatic differentiation can be expressed as the graph:
 ![png](https://levi0206.github.io/lerblog2/autodiff/forward.png)
-Note that this is the graph for the partial derivative of $y$ with respect to $x_1$. Thus, if your model takes a $n$-dimensional vector as input, then you have to traverse the graph for $n$ times, which is extremely slow and inefficient for the optimization of deep-learning models. In contrast, we only use **one** traversal to obtain the partial derivatives of **both** $x_1$ and $x_2$ in the reverse mode. Also, it's worth of noting that the partial derivatives $\frac{\partial w_j}{\partial w_i}$ are evaluated in the forward traversal. Since we traverse the graph backward and propagate the partial derivatives to all the nodes, the reverse-mode automatic differentiation is called **backpropagation** as well.
+Note that this graph represents the partial derivative of $y$ with respect to $x_1$. Thus, if your model takes an $n$-dimensional vector as input, you would need to traverse the graph $n$ times, which is extremely slow and inefficient for optimizing deep learning models. In contrast, the reverse mode requires only **one** traversal to obtain the partial derivatives of **both** $x_1$ and $x_2$. It is also worth noting that the partial derivatives $\frac{\partial w_j}{\partial w_i}$ are evaluated during the forward traversal. Since we traverse the graph backward and propagate the partial derivatives to all the nodes, reverse-mode automatic differentiation is also known as **backpropagation**.
 ![png](https://levi0206.github.io/lerblog2/autodiff/reverse.png)
-Here, we understand the difference of the efficiency of the two schemes in a more visible way:
-- The forward mode traverses the computational graph once for each variable;
-- The backpropagation traverses only once and gets all the partial derivatives.
+Here, we can see the difference in efficiency between the two schemes more clearly:
+- The forward mode requires traversing the computational graph once for each variable.
+- In contrast, backpropagation traverses the graph only once and computes all the partial derivatives simultaneously.
 
 ## Example: Backpropagation on a Neural Network
-Suppose we perform a binary classification task using a neural network with three hidden layers. Let $x\in\mathbb{R}^4$ be a $4$-dimensional column vector and suppose
-- the first hidden layer consist of $4$ node;
-- the second one consist of $2$ nodes;
-- a sigmoid function $\sigma$ is applied after the second hidden layer.
+Suppose we perform a binary classification task using a neural network with three hidden layers. Let $x\in\mathbb{R}^4$ be a $4$-dimensional column vector. Assume the following:
+- The first hidden layer consists of 4 nodes.
+- The second hidden layer consists of 2 nodes.
+- A sigmoid function $\sigma$ is applied after the second hidden layer.
 
 Namely, it is a function $\text{NN}:\mathbb{R}^4\to\mathbb{R}$ defined by
 $$
@@ -336,6 +336,7 @@ $$
 \end{aligned}
 $$
 You can draw the computational graph yourself. The computation can be represented in the vector form where $\mathbf{z}_i$ are column vectors:
+![png](https://levi0206.github.io/lerblog2/autodiff/vector_form.png)
 - Forward pass:
 $$
 \begin{aligned}
