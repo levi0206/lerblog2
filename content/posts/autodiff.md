@@ -293,7 +293,7 @@ Here, we understand the difference of the efficiency of the two schemes in a mor
 Suppose we perform a binary classification task using a multilayer perceptron (MLP). Let $x\in\mathbb{R}^n$ and
 $$
 \begin{aligned}
-
+test
 \end{aligned}
 $$
 
