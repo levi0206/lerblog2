@@ -332,10 +332,10 @@ $$
 \dot{z_{1,1}} & = \frac{\partial L}{\partial z_{1,1}} = \dot{z_{2,1}}w^2_{1,1} \\
 \dot{w^1_{1,1}} & = \frac{\partial L}{\partial w^1_{1,1}} = \dot{z_{1,1}}x_1 \\
 \dot{b^1_{1,1}} & = \frac{\partial L}{\partial b^1_{1,1}} = \dot{z_{1,1}} \\
-\dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{z_{2,1}}w_{1,1}
+\dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{z_{1,1}}w_{1,1}
 \end{aligned}
 $$
-You can draw the computational graph yourself. The computation can be represented in the vector form:
+You can draw the computational graph yourself. The computation can be represented in the vector form where $\mathbf{z}_i$ are column vectors:
 - Forward pass:
 $$
 \begin{aligned}
