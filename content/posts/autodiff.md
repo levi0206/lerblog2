@@ -317,13 +317,13 @@ L & = (\hat{y}-y)^2.
 $$
 The forward pass of $L$ is like
 ![png](https://levi0206.github.io/lerblog2/autodiff/MLP_forward.png)
-In particular, the parents of $z_3$, apart from $z_{2,1}$ and $z_{2,2}$, are $w^3_{1,1}$, $w^3_{1,2}$ and $b_3$ 
-[png](https://levi0206.github.io/lerblog2/autodiff/hidden.png)
+In particular, the parents of $z_3$, apart from $z_{2,1}$ and $z_{2,2}$, are $w^3_{1,1}$, $w^3_{1,2}$ and $b_3$.
+![png](https://levi0206.github.io/lerblog2/autodiff/hidden.png)
 Now we walk through the propagation process of $\frac{\partial L}{\partial x_1}$:
 $$
 \begin{aligned}
 \dot{\hat{y}} & = \frac{\partial L}{\partial \hat{y}} = 2(\hat{y}-y) \\
-\dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma(z_{3})' \\
+\dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma'(z_{3}) \\
 \dot{w^3_{1,1}} & = \frac{\partial L}{\partial w^3_{1,1}} = \dot{z_3}z_{2,1} \\
 \dot{b_3} & = \frac{\partial L}{\partial b_{3,1}} = \dot{z_3} \\
 \dot{z_{2,1}} & = \frac{\partial L}{\partial z_{2,1}} = \dot{z_3}w^3_{1,1} \\
