@@ -289,4 +289,7 @@ Here, we understand the difference of the efficiency of the two schemes in a mor
 - The forward mode traverses the computational graph once for each variable;
 - The backpropagation traverses only once and gets all the partial derivatives.
 
-## Example: Automatic Differentiation on MLP
+## Example: Backpropagation on MLP
+Suppose we perform a binary classification task using a multilayer perceptron (MLP).
+
+## Example: Backpropagation through Time (BPTT)
