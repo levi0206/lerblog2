@@ -1,6 +1,6 @@
 ---
 title: "Understand Automatic Differentiation"
-date: 2024-07-17T00:00:42+08:00
+date: 2024-07-20T03:17:10+08:00
 draft: false
 ShowToc: true
 ---
