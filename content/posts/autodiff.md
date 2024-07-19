@@ -150,7 +150,7 @@ where
 - $f_2:\mathbb{R}^{n_1}\to\mathbb{R}^{n_2}$
 - $f_3:\mathbb{R}^{n_2}\to\mathbb{R}^{n_3}$
 
-are differentiable, $n,n_1,n_2,n_3\in\mathbb{N}$. For a vector $\mathbf{x}\in\mathbb{R}^n$, write 
+are differentiable. For a vector $\mathbf{x}\in\mathbb{R}^n$, write 
 $$
 \mathbf{a} = f_1(\mathbf{x}), \quad \mathbf{b} = f_2(\mathbf{a}), \quad \mathbf{c} = f_3(\mathbf{b})
 $$
@@ -177,19 +177,7 @@ and in the reverse mode, we compute
 $$
 \frac{df}{d\mathbf{x}} = \left(\frac{d\mathbf{c}}{d\mathbf{b}}\frac{d\mathbf{b}}{d\mathbf{a}}\right)\frac{d\mathbf{a}}{d\mathbf{x}}.
 $$
-Now, note that for two matrices $A,B$ of size $a\times b$ and $b\times c$, the number of multiplications in the product $A\cdot B$ is $a\cdot b\cdot c$. Thus, the forward mode requires
-$$
-|\mathbf{x}|\cdot|\mathbf{a}|\cdot|\mathbf{b}|+|\mathbf{x}|\cdot|\mathbf{b}|\cdot|\mathbf{c}| = |\mathbf{x}|\cdot|\mathbf{b}|(|\mathbf{a}|+|\mathbf{c}|),
-$$
-while the reverse mode requires
-$$
-|\mathbf{c}|\cdot|\mathbf{a}|\cdot|\mathbf{b}|+|\mathbf{c}|\cdot|\mathbf{a}|\cdot|\mathbf{x}| = |\mathbf{c}|\cdot|\mathbf{a}|(|\mathbf{b}|+|\mathbf{x}|).
-$$
-Which one is more efficient? It depends, but let's first consider a simple case $|\mathbf{c}|\geq|\mathbf{b}|\geq|\mathbf{a}|\geq|\mathbf{x}|$; namely, the input is low dimensional and the output is high dimensional. In this case, the forward mode is more efficient because
-$$
-\frac{|\mathbf{c}|\cdot|\mathbf{a}|}{|\mathbf{x}|\cdot|\mathbf{b}|}\ge\frac{|\mathbf{c}|+|\mathbf{a}|}{|\mathbf{x}|+|\mathbf{b}|}.
-$$
-Conversely, if $|\mathbf{c}|\leq|\mathbf{b}|\leq|\mathbf{a}|\leq|\mathbf{x}|$. For instance, $f$ is vector-input-scalar-output; then the reverse mode is more efficient. However, there's an intuitive way of seeing this. Let $\mathbf{x}$ be a vector and let $f$ output a scalar. Suppose the output of $f_i$ is a vevtor. Then the forward-mode AD performs matrix-matrix products, while the reverse mode performs vector-matrix products, much more efficient than the forward mode, which gives the reason why in practice, we always use reverse-mode AD because the loss function is typically a real-valued function taking a vector as input.
+Let $\mathbf{x}$ be a vector and let $f$ output a scalar. Suppose the output of $f_i$ is a vevtor. Then the forward-mode automatic differentiation performs matrix-matrix products, while the reverse mode performs vector-matrix products, much more efficient than the forward mode, which gives the reason why in practice, we always use reverse-mode automatic differentiation because the loss function is typically a real-valued function taking a vector as input.
 
 ### General formula
 Let's continue with a slightly complicated function. Consider $f:\mathbb{R}^2\to\mathbb{R}$
