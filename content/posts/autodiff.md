@@ -290,6 +290,11 @@ Here, we understand the difference of the efficiency of the two schemes in a mor
 - The backpropagation traverses only once and gets all the partial derivatives.
 
 ## Example: Backpropagation on MLP
-Suppose we perform a binary classification task using a multilayer perceptron (MLP).
+Suppose we perform a binary classification task using a multilayer perceptron (MLP). Let $x\in\mathbb{R}^n$ and
+$$
+\begin{aligned}
+
+\end{aligned}
+$$
 
 ## Example: Backpropagation through Time (BPTT)
