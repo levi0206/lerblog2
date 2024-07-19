@@ -317,4 +317,5 @@ L & = (\hat{y}-y)^2.
 $$
 The forward pass of $L$ is like
 ![png](https://levi0206.github.io/lerblog2/autodiff/MLP_forward.png)
+Now we walk through the "propagation" process:
 ## Example: Backpropagation through Time
