@@ -5,7 +5,7 @@ draft: false
 ShowToc: true
 ---
 
-Automatic differentiation, or AD, is crucial in deep learning and widely used in almost every neural network optimization because it enables the efficient and accurate computation of gradients, which are essential for training models through techniques such as gradient descent. It has been integrated into many deep-learning frameworks such as PyTorch and TensorFlow, allowing users to perform AD on neural networks with just a few lines of code. This post aims to clarify concepts such as forward mode, reverse mode, and computational graphs, though from an engineering perspective, it is still possible to build models without a deep understanding of automatic differentiation.
+Automatic differentiation \(auto-differentiation, AD\), is crucial in deep learning and widely used in almost every neural network optimization because it enables the efficient and accurate computation of gradients, which are essential for training models through techniques such as gradient descent. It has been integrated into many deep-learning frameworks such as PyTorch and TensorFlow, allowing users to perform AD on neural networks with just a few lines of code. This post aims to clarify concepts such as forward mode, reverse mode, and computational graphs, though from an engineering perspective, it is still possible to build models without a deep understanding of automatic differentiation.
 
 ## Numerical differentiation and symbolic differentiation
 It must be clarified that the automatic differentiation is **not numerical differentiation**, which calculates the derivative of $f$ using definition
@@ -290,11 +290,20 @@ Here, we understand the difference of the efficiency of the two schemes in a mor
 - The backpropagation traverses only once and gets all the partial derivatives.
 
 ## Example: Backpropagation on MLP
-Suppose we perform a binary classification task using a multilayer perceptron (MLP). Let $x\in\mathbb{R}^n$ and
+Suppose we perform a binary classification task using a multilayer perceptron \(MLP\) with two hidden layers. Let $x\in\mathbb{R}^4$ and suppose
+- the first hidden layer consist of $4$ node;
+- the second one consist of $2$ nodes;
+- a sigmoid function $\sigma$ is applied after the second hidden layer.
+
+Namely, it is a function $\text{MLP}:\mathbb{R}^4\to\mathbb{R}$ defined by
 $$
 \begin{aligned}
-test
+\text{MLP}(x) & = \sigma \circ N_2 \circ N_1 (x) \\
+N_1(x) & = W^1 x + b^1, \quad W^1\in\mathbb{R}^{4\times 2}, b^1\in\mathbb{R}^{2} \\
+N_2(x) & = W^2 x + b^2, \quad W^2\in\mathbb{R}^{2\times 1}, b^2\in\mathbb{R} \\
+\sigma(x) & = \frac{1}{1+e^{-x}}.
 \end{aligned}
 $$
 
-## Example: Backpropagation through Time (BPTT)
+
+## Example: Backpropagation through Time
