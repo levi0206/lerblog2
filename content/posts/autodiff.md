@@ -5,7 +5,7 @@ draft: false
 ShowToc: true
 ---
 
-Automatic differentiation \(auto-differentiation, AD\), is crucial in deep learning and widely used in almost every neural network optimization because it enables the efficient and accurate computation of gradients, which are essential for training models through techniques such as gradient descent. It has been integrated into many deep-learning frameworks such as PyTorch and TensorFlow, allowing users to perform AD on neural networks with just a few lines of code. This post aims to clarify concepts such as forward mode, reverse mode, and computational graphs, though from an engineering perspective, it is still possible to build models without a deep understanding of automatic differentiation.
+Automatic differentiation is crucial in deep learning and widely used in almost every neural network optimization because it enables the efficient and accurate computation of gradients, which are essential for training models through techniques such as gradient descent. It has been integrated into many deep-learning frameworks such as PyTorch and TensorFlow, allowing users to perform the automatic differentiation on neural networks with just a few lines of code. This post aims to clarify concepts such as forward mode, reverse mode, and computational graphs, though from an engineering perspective, it is still possible to build models without a deep understanding of automatic differentiation.
 
 ## Numerical differentiation and symbolic differentiation
 It must be clarified that the automatic differentiation is **not numerical differentiation**, which calculates the derivative of $f$ using definition
@@ -315,5 +315,6 @@ z_3 & = N_3(z_2) =W^3z_2 + b^3\\
 L & = (\hat{y}-y)^2. 
 \end{aligned}
 $$
-
+The forward pass of $L$ is like
+![png](https://levi0206.github.io/lerblog2/autodiff/MLP forward.png)
 ## Example: Backpropagation through Time
