@@ -289,7 +289,7 @@ Here, we understand the difference of the efficiency of the two schemes in a mor
 - The forward mode traverses the computational graph once for each variable;
 - The backpropagation traverses only once and gets all the partial derivatives.
 
-## Example: Backpropagation on MLP
+## Example: Backpropagation on a Neural Network
 Suppose we perform a binary classification task using a neural network with three hidden layers. Let $x\in\mathbb{R}^4$ be a $4$-dimensional column vector and suppose
 - the first hidden layer consist of $4$ node;
 - the second one consist of $2$ nodes;
@@ -301,11 +301,11 @@ $$
 \text{NN}(x) & = \sigma \circ N_3 \circ N_2 \circ N_1 (x) \\
 N_1(x) & = W^1 x + b^1, \quad \mathbf{W}^1\in\mathbb{R}^{4\times 4}, b^1\in\mathbb{R}^4 \\
 N_2(x) & = W^2 x + b^2, \quad \mathbf{W}^2\in\mathbb{R}^{4\times 2}, b^2\in\mathbb{R}^2 \\
-N_3(x) & = W^3 x + b^3, \quad \mathbf{W}^2\in\mathbb{R}^{2\times 1}, b^3\in\mathbb{R} \\
+N_3(x) & = W^3 x + b^3, \quad \mathbf{W}^3\in\mathbb{R}^{2\times 1}, b^3\in\mathbb{R} \\
 \sigma(x) & = \frac{1}{1+e^{-x}}.
 \end{aligned}
 $$
-where $\mathbf{W}^n=(w^n_{i,j})$. Define the loss function
+where $\mathbf{W}^n=(w^n_{i,j})$, and particularly, $\mathbf{W}^3$ is a row vector. Define the loss function
 $$
 \begin{aligned}
 z_1 & = N_1(x) = \mathbf{W}^1x+ b^1\\
@@ -325,13 +325,13 @@ $$
 \dot{\hat{y}} & = \frac{\partial L}{\partial \hat{y}} = 2(\hat{y}-y) \\
 \dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma'(z_{3}) \\
 \dot{w^3_{1,1}} & = \frac{\partial L}{\partial w^3_{1,1}} = \dot{z_3}z_{2,1} \\
-\dot{b_3} & = \frac{\partial L}{\partial b_{3,1}} = \dot{z_3} \\
+\dot{b^3} & = \frac{\partial L}{\partial b_{3,1}} = \dot{z_3} \\
 \dot{z_{2,1}} & = \frac{\partial L}{\partial z_{2,1}} = \dot{z_3}w^3_{1,1} \\
 \dot{w^2_{1,1}} & = \frac{\partial L}{\partial w^2_{1,1}} = \dot{z_{2,1}}z_{1,1} \\
 \dot{b^2_{1,1}} & = \frac{\partial L}{\partial b^2_{1,1}} = \dot{z_{2,1}} \\
 \dot{z_{1,1}} & = \frac{\partial L}{\partial z_{1,1}} = \dot{z_{2,1}}w^2_{1,1} \\
-\dot{w^1_{1,1}} & = \frac{\partial L}{\partial w^1_{1,1}} = \dot{z_{2,1}}_1 \\
-\dot{b^1_{1,1}} & = \frac{\partial L}{\partial b^1_{1,1}} = \dot{z_{2,1}} \\
+\dot{w^1_{1,1}} & = \frac{\partial L}{\partial w^1_{1,1}} = \dot{z_{1,1}}x_1 \\
+\dot{b^1_{1,1}} & = \frac{\partial L}{\partial b^1_{1,1}} = \dot{z_{1,1}} \\
 \dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{z_{2,1}}w_{1,1}
 \end{aligned}
 $$
@@ -339,9 +339,9 @@ You can draw the computational graph yourself. The computation can be represente
 - Forward pass:
 $$
 \begin{aligned}
-\mathbf{z}_1 & = \mathbf{W}^1\mathbf{x}+\mathbf{b}_1 \, \in\mathbb{R}^4 \\
-\mathbf{z}_2 & = \mathbf{W}^2\mathbf{z}_1+\mathbf{b}_2 \, \in\mathbb{R}^2 \\
-z_3 & = \mathbf{W}^3\mathbf{z}_2+b_3 \, \in\mathbb{R} \\
+\mathbf{z}_1 & = \mathbf{W}^1\mathbf{x}+\mathbf{b}^1 \, \in\mathbb{R}^4 \\
+\mathbf{z}_2 & = \mathbf{W}^2\mathbf{z}_1+\mathbf{b}^2 \, \in\mathbb{R}^2 \\
+z_3 & = \mathbf{W}^3\mathbf{z}_2+b^3 \, \in\mathbb{R} \\
 \hat{y} & = \sigma(z_3) \\
 L & = (\hat{y}-y)^2
 \end{aligned}
@@ -351,9 +351,13 @@ $$
 \begin{aligned}
 \dot{\hat{y}} & = \frac{\partial L}{\partial \hat{y}} = 2(\hat{y}-y) \\
 \dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma'(z_{3}) \\
-\mathbf{W}^3 & = \dot{z_3} \mathbf{z}_2^\top \\
-b_3 & = \dot{z_3} \\
-\dot{\mathbf{z}_2} & = 
+\dot{\mathbf{W}^3} & = \dot{z_3} \mathbf{z}_2^\top \quad \text{row vector} \\
+\dot{b^3} & = \dot{z_3} \\
+\dot{\mathbf{z}_2} & = \dot{z_3}\mathbf{W}^3 \quad \text{row vector} \\
+\dot{\mathbf{W}^2} & = \dot{\mathbf{z}_2}\mathbf{z}_1^\top \\
+\dot{\mathbf{b}^2} & = \dot{\mathbf{z}_2} \\
+\dot{\mathbf{W}^1} & = \dot{\mathbf{z}_1}\mathbf{x}^\top \\
+\dot{\mathbf{b}^1} & = \dot{\mathbf{z}_1}
 \end{aligned}
 $$
 ## Example: Backpropagation through Time
