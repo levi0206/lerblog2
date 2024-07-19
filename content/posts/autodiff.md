@@ -317,25 +317,22 @@ L & = (\hat{y}-y)^2.
 $$
 The forward pass of $L$ is like
 ![png](https://levi0206.github.io/lerblog2/autodiff/MLP_forward.png)
-For simplicity, let's rewrite $z_{i,1}=\sum_{k=1}^4 h^i_{1,k}$ and $z_3=h^3_1+h^3_2$.
-![png](https://levi0206.github.io/lerblog2/autodiff/NN_hidden.png)
+In particular, the parents of $z_3$, apart from $z_{2,1}$ and $z_{2,2}$, are $w^3_{1,1}$, $w^3_{1,2}$ and $b_3$ 
+[png](https://levi0206.github.io/lerblog2/autodiff/hidden.png)
 Now we walk through the propagation process of $\frac{\partial L}{\partial x_1}$:
 $$
 \begin{aligned}
 \dot{\hat{y}} & = \frac{\partial L}{\partial \hat{y}} = 2(\hat{y}-y) \\
 \dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma(z_{3})' \\
-\dot{h^3_1} & = \frac{\partial L}{\partial h^3} = \dot{z_3} \cdot 1 \\
-\dot{w^3_{1,1}} & = \frac{\partial L}{\partial w^3_{1,1}} = \dot{h^3_1}z_{2,1} \\
-\dot{b_{3,1}} & = \frac{\partial L}{\partial b_{3,1}} = \dot{h^3_1} \cdot 1 \\
-\dot{z_{2,1}} & = \frac{\partial L}{\partial z_{2,1}} = \dot{h^3_1}w^3_{1,1} \\
-\dot{h^2_{1,1}} & = \frac{\partial L}{\partial h^2_{1,1}} = \dot{z_{2,1}} \cdot 1 \\
-\dot{w^2_{1,1}} & = \frac{\partial L}{\partial w^2_{1,1}} = \dot{h^2_{1,1}}z_{1,1} \\
-\dot{b^2_{1,1}} & = \frac{\partial L}{\partial b^2_{1,1}} = \dot{h^2_{1,1}} \\
-\dot{z_{1,1}} & = \frac{\partial L}{\partial z_{1,1}} = \dot{h^2_{1,1}}w^2_{1,1} \\
-\dot{h^{1,1}} & = \frac{\partial L}{\partial h^1_{1,1}} = \dot{z_{1,1}} \cdot 1 \\
-\dot{w^1_{1,1}} & = \frac{\partial L}{\partial w^1_{1,1}} = \dot{h^1_{1,1}}x_1 \\
-\dot{b^1_{1,1}} & = \frac{\partial L}{\partial b^1_{1,1}} = \dot{h^1_{1,1}} \\
-\dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{h^{1,1}}w_{1,1}
+\dot{w^3_{1,1}} & = \frac{\partial L}{\partial w^3_{1,1}} = \dot{z_3}z_{2,1} \\
+\dot{b_3} & = \frac{\partial L}{\partial b_{3,1}} = \dot{z_3} \\
+\dot{z_{2,1}} & = \frac{\partial L}{\partial z_{2,1}} = \dot{z_3}w^3_{1,1} \\
+\dot{w^2_{1,1}} & = \frac{\partial L}{\partial w^2_{1,1}} = \dot{z_{2,1}}z_{1,1} \\
+\dot{b^2_{1,1}} & = \frac{\partial L}{\partial b^2_{1,1}} = \dot{z_{2,1}} \\
+\dot{z_{1,1}} & = \frac{\partial L}{\partial z_{1,1}} = \dot{z_{2,1}}w^2_{1,1} \\
+\dot{w^1_{1,1}} & = \frac{\partial L}{\partial w^1_{1,1}} = \dot{z_{2,1}}_1 \\
+\dot{b^1_{1,1}} & = \frac{\partial L}{\partial b^1_{1,1}} = \dot{z_{2,1}} \\
+\dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{z_{2,1}}w_{1,1}
 \end{aligned}
 $$
 You can draw the graph yourself. The computation can be represented in the vector form
