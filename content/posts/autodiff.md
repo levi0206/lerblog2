@@ -167,9 +167,9 @@ $$
 $$
 can be obtained by a product of Jacobian matrices
 $$
-\underbrace{\frac{df}{d \mathbf{x}}}_{|\mathbf{c}|\times|\mathbf{x}|} = \underbrace{\frac{d \mathbf{c}(\mathbf{b})}{d \mathbf{b}}}_{|\mathbf{c}|\times|\mathbf{b}|} \underbrace{\frac{d \mathbf{b}(\mathbf{a})}{d \mathbf{a}}}_{|\mathbf{b}|\times|\mathbf{a}|} \underbrace{\frac{d \mathbf{a}(\mathbf{x})}{d \mathbf{x}}}_{|\mathbf{a}|\times|\mathbf{x}|}
+\frac{df}{d \mathbf{x}}_{|\mathbf{c}|\times|\mathbf{x}|} = \frac{d \mathbf{c}(\mathbf{b})}{d \mathbf{b}}_{|\mathbf{c}|\times|\mathbf{b}|} \frac{d \mathbf{b}(\mathbf{a})}{d \mathbf{a}}_{|\mathbf{b}|\times|\mathbf{a}|} \frac{d \mathbf{a}(\mathbf{x})}{d \mathbf{x}}_{|\mathbf{a}|\times|\mathbf{x}|}
 $$
-in which $|\mathbf{x}|$ denotes the dimension of $\mathbf{x}$ and the size of each Jacobian matrix is annoted using underbraces. Instead of using $n,n_1,n_2,n_3$, the notation $|\mathbf{x}|$ makes more clear in the following discussion. The "forward" and "reverse" refer to the **order** of calculating derivatives. In the forward mode, we calculate $\frac{df}{d\mathbf{x}}$ in this fashion
+In the forward mode, we calculate $\frac{df}{d\mathbf{x}}$ in this fashion
 $$
 \frac{df}{d\mathbf{x}} = \frac{d\mathbf{c}}{d\mathbf{b}}\left(\frac{d\mathbf{b}}{d\mathbf{a}}\frac{d\mathbf{a}}{d\mathbf{x}}\right), \\
 $$
