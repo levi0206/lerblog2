@@ -317,7 +317,7 @@ L & = (\hat{y}-y)^2.
 $$
 The forward pass of $L$ is like
 ![png](https://levi0206.github.io/lerblog2/autodiff/MLP_forward.png)
-For simplicity, let's rewrite $z_{i,1}\sum_{k=1}^4 h^i_{1,k}$ and $z_3=h^3_1+h^3_2$.
+For simplicity, let's rewrite $z_{i,1}=\sum_{k=1}^4 h^i_{1,k}$ and $z_3=h^3_1+h^3_2$.
 ![png](https://levi0206.github.io/lerblog2/autodiff/NN_hidden.png)
 Now we walk through the propagation process of $\frac{\partial L}{\partial x_1}$:
 $$
@@ -338,5 +338,6 @@ $$
 \dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{h^{1,1}}w_{1,1}
 \end{aligned}
 $$
-I'm sorry I'm lazy to draw the graph. 
+You can draw the graph yourself. The computation can be represented in the vector form
+
 ## Example: Backpropagation through Time
