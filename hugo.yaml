@@ -22,7 +22,7 @@ menu:
 Params:
   homeInfoParams:
     Title: "👋 Welcome to Ler'Blog"
-    Content: Documenting my notes on deep learning, mathematics, statistics, and probability, focusing on the topics that interest me.
+    Content: Documenting my notes on deep learning, mathematics, statistics, and probability.
   ShowBreadCrumbs: true
   ShowReadingTime: true
   ShowPostNavLinks: true
