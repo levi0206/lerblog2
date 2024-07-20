@@ -5,7 +5,7 @@ draft: false
 ShowToc: true
 ---
 
-<span style="color:green">Updated on 2024-07-18: Use new code example</span>.
+<span style="color:MediumSeaGreen">Updated on 2024-07-18: Use new code example</span>.
 
 
 ## Outline
