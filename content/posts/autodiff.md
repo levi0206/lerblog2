@@ -163,11 +163,11 @@ $$
 \vdots & \ddots & \vdots \\
 \frac{df_{n_3}}{dx_1} & \dots & \frac{df_{n_3}}{dx_n}
 \end{matrix}
-\right] \quad {(\text{$n_3\times n$} matrix)}
+\right] \quad {\text{($n_3\times n$ matrix)}}
 $$
 can be obtained by a product of Jacobian matrices
 $$
-\frac{df}{d \mathbf{x}}_{|\mathbf{c}|\times|\mathbf{x}|} = \frac{d \mathbf{c}(\mathbf{b})}{d \mathbf{b}}_{|\mathbf{c}|\times|\mathbf{b}|} \frac{d \mathbf{b}(\mathbf{a})}{d \mathbf{a}}_{|\mathbf{b}|\times|\mathbf{a}|} \frac{d \mathbf{a}(\mathbf{x})}{d \mathbf{x}}_{|\mathbf{a}|\times|\mathbf{x}|}
+\underbrace{\frac{df}{d \mathbf{x}}}_{n_3\times n} = \underbrace{\frac{d \mathbf{c}(\mathbf{b})}{d \mathbf{b}}}_{n_3\times n_2} \underbrace{\frac{d \mathbf{b}(\mathbf{a})}{d \mathbf{a}}}_{n_2\times n_1} \underbrace{\frac{d \mathbf{a}(\mathbf{x})}{d \mathbf{x}}}_{n_1\times n}
 $$
 In the forward mode, we calculate $\frac{df}{d\mathbf{x}}$ in this fashion
 $$
