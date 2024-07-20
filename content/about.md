@@ -3,7 +3,7 @@ title: "About"
 layout: "profile-mode"
 url: "/about/"
 ---
-The style of the blog will be to explain important mathematical concepts that people often find difficult and tend to overlook when reading and learning. I will cover these concepts by discussing theorems, proofs, and calculations, and will occasionally provide visualizations and code. I will try to achieve this as thoroughly as possible.
+The style of the blog will be to explain important **mathematical** concepts that people often find difficult and tend to overlook when reading and learning. I will cover these concepts by discussing theorems, proofs, and calculations, and will occasionally provide **visualizations** and **code**. I will try to achieve this as thoroughly as possible.
 
 ### About me
 I'm currently a university student with a deep interest in deep learning, statistical learning, the mathematics of generative models, stochastic processes, and stochastic calculus.
