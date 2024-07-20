@@ -4,6 +4,8 @@ date: 2024-07-20T03:17:10+08:00
 draft: false
 ShowToc: true
 ---
+### Update log
+- Updated on 2024-07-20: Correct the computation in the Backpropagation on a Neural Network.
 
 Automatic differentiation is crucial in deep learning and widely used in almost every neural network optimization because it enables the efficient and accurate computation of gradients, which are essential for training models through techniques such as gradient descent. It has been integrated into many deep-learning frameworks such as PyTorch and TensorFlow, allowing users to perform the automatic differentiation on neural networks with just a few lines of code. This post aims to clarify concepts such as forward mode, reverse mode, and computational graphs, though from an engineering perspective, it is still possible to build models without a deep understanding of automatic differentiation.
 
@@ -320,7 +322,7 @@ $$
 \dot{z_{1,1}} & = \frac{\partial L}{\partial z_{1,1}} = \dot{z_{2,1}}w^2_{1,1}+\dot{z_{2,2}}w^2_{2,1} \\
 \dot{w^1_{1,1}} & = \frac{\partial L}{\partial w^1_{1,1}} = \dot{z_{1,1}}x_1 \\
 \dot{b^1_{1,1}} & = \frac{\partial L}{\partial b^1_{1,1}} = \dot{z_{1,1}} \\
-\dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{z_{1,1}}w_{1,1}
+\dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{z_{1,1}}w_{1,1}+\dot{z_{1,2}}w_{2,1}+\dot{z_{1,3}}w_{3,1}+\dot{z_{1,4}}w_{4,1}
 \end{aligned}
 $$
 You can draw the computational graph yourself. The computation can be represented in the vector form where $\mathbf{z}_i$ are column vectors:
@@ -347,7 +349,8 @@ $$
 \dot{\mathbf{b}^2} & = \dot{\mathbf{z}_2} \\
 \dot{\mathbf{z}_1} & = {\mathbf{W}^2}^\top\dot{\mathbf{z}_2} \quad \text{($\mathbb{R}^4$ column vector)} \\
 \dot{\mathbf{W}^1} & = \dot{\mathbf{z}_1}\mathbf{x}^\top \\
-\dot{\mathbf{b}^1} & = \dot{\mathbf{z}_1}
+\dot{\mathbf{b}^1} & = \dot{\mathbf{z}_1} \\
+\dot{\mathbf{x}} & = {\mathbf{W}^2}^\top\dot{z_1}
 \end{aligned}
 $$
 ## Summary
