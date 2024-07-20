@@ -4,7 +4,7 @@ date: 2024-02-01T10:04:47+08:00
 draft: false
 ---
 
-${\color{green} \text{[Updated on 2024-07-17: Add steps for installing/updating the theme and update workflow.]}}$
+${\textcolor{green} [Updated on 2024-07-17: Add steps for installing/updating the theme and update workflow.]}$
 <!-- <font color='green'>[Updated on 2024-07-17: Add steps for installing/updating the theme and update workflow.]</font> -->
 <!-- <span style="color:MediumSeaGreen">Updated on 2024-07-17: Add steps for installing/updating the theme and update workflow.</span>. -->
 
