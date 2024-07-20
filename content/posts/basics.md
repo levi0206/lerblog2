@@ -4,9 +4,9 @@ date: 2024-02-01T10:20:33+08:00
 draft: false
 ShowToc: true
 ---
-${\color{green} [Updated on 2024-07-18: New code exmaple.]}$
-<!-- <font color='green'>[Updated on 2024-07-18: New code exmaple.]</font> -->
-<!-- <span style="color:MediumSeaGreen">[Updated on 2024-07-18: New code exmaple.]</span> -->
+
+### Update log
+- Updated on 2024-07-18: New code exmaple.
 
 
 ## Outline
