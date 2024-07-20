@@ -5,7 +5,7 @@ draft: false
 ShowToc: true
 ---
 
-## Updating log
+## Update log
 - 2024-07-18: Use new code example
 
 ## Outline
