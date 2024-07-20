@@ -340,7 +340,7 @@ $$
 \begin{aligned}
 \dot{\hat{y}} & = \frac{\partial L}{\partial \hat{y}} = 2(\hat{y}-y) \\
 \dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma'(z_{3}) \\
-\dot{\mathbf{W}^3} & = \mathbf{z}_2^\top\dot{z_3} \quad \text{($1times 2$ matrix)} \\
+\dot{\mathbf{W}^3} & = \mathbf{z}_2^\top\dot{z_3} \quad \text{($1\times 2$ matrix)} \\
 \dot{b^3} & = \dot{z_3} \\
 \dot{\mathbf{z}_2} & = {\mathbf{W}^3}^\top\dot{z_3} \quad \text{($\mathbb{R}^2$ column vector)} \\
 \dot{\mathbf{W}^2} & = \mathbf{z}_1\dot{\mathbf{z}_2}^\top \quad \text{($2\times 4$ matrix)}\\
