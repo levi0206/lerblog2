@@ -4,8 +4,8 @@ date: 2024-02-01T10:20:33+08:00
 draft: false
 ShowToc: true
 ---
-
-<span style="color:MediumSeaGreen">Updated on 2024-07-18: Use new code example</span>.
+<font color='green'>[Updated on 2024-07-18: New code exmaple.]</font>
+<!-- <span style="color:MediumSeaGreen">[Updated on 2024-07-18: New code exmaple.]</span> -->
 
 
 ## Outline
