@@ -350,7 +350,7 @@ $$
 \dot{\mathbf{z}_1} & = {\mathbf{W}^2}^\top\dot{\mathbf{z}_2} \quad \text{($\mathbb{R}^4$ column vector)} \\
 \dot{\mathbf{W}^1} & = \dot{\mathbf{z}_1}\mathbf{x}^\top \\
 \dot{\mathbf{b}^1} & = \dot{\mathbf{z}_1} \\
-\dot{\mathbf{x}} & = {\mathbf{W}^2}^\top\dot{z_1}
+\dot{\mathbf{x}} & = {\mathbf{W}^2}^\top\dot{\mathbf{z}_1}
 \end{aligned}
 $$
 ## Summary
