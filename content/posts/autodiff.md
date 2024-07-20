@@ -317,7 +317,7 @@ $$
 \dot{z_{2,1}} & = \frac{\partial L}{\partial z_{2,1}} = \dot{z_3}w^3_{1,1} \\
 \dot{w^2_{1,1}} & = \frac{\partial L}{\partial w^2_{1,1}} = \dot{z_{2,1}}z_{1,1} \\
 \dot{b^2_{1,1}} & = \frac{\partial L}{\partial b^2_{1,1}} = \dot{z_{2,1}} \\
-\dot{z_{1,1}} & = \frac{\partial L}{\partial z_{1,1}} = \dot{z_{2,1}}w^2_{1,1} \\
+\dot{z_{1,1}} & = \frac{\partial L}{\partial z_{1,1}} = \dot{z_{2,1}}w^2_{1,1}+\dot{z_{2,2}}w^2_{2,1} \\
 \dot{w^1_{1,1}} & = \frac{\partial L}{\partial w^1_{1,1}} = \dot{z_{1,1}}x_1 \\
 \dot{b^1_{1,1}} & = \frac{\partial L}{\partial b^1_{1,1}} = \dot{z_{1,1}} \\
 \dot{x_1} & = \frac{\partial L}{\partial x_1} = \dot{z_{1,1}}w_{1,1}
@@ -340,12 +340,12 @@ $$
 \begin{aligned}
 \dot{\hat{y}} & = \frac{\partial L}{\partial \hat{y}} = 2(\hat{y}-y) \\
 \dot{z_3} & = \frac{\partial L}{\partial z_{3}} = \dot{\hat{y}}\sigma'(z_{3}) \\
-\dot{\mathbf{W}^3} & = \dot{z_3} \mathbf{z}_2^\top \quad \text{(row vector)} \\
+\dot{\mathbf{W}^3} & = \dot{z_3} \mathbf{z}_2^\top \quad \text{($1times 2$ matrix)} \\
 \dot{b^3} & = \dot{z_3} \\
-\dot{\mathbf{z}_2} & = \mathbf{W}^3\dot{z_3}^\top \quad \text{(row vector)} \\
-\dot{\mathbf{W}^2} & = \dot{\mathbf{z}_2}\mathbf{z}_1^\top \quad \text{($2\times 4$ matrix)}\\
+\dot{\mathbf{z}_2} & = \dot{z_3}\mathbf{W}^3^\top \quad \text{($\mathbb{R}^2$ column vector)} \\
+\dot{\mathbf{W}^2} & = \mathbf{z}_1\dot{\mathbf{z}_2}^\top \quad \text{($2\times 4$ matrix)}\\
 \dot{\mathbf{b}^2} & = \dot{\mathbf{z}_2} \\
-\dot{\mathbf{z}_1} & = \mathbf{W}^2\dot{\mathbf{z}_2}^\top \quad \text{(row vector)} \\
+\dot{\mathbf{z}_1} & = \mathbf{W}^2\top\dot{\mathbf{z}_2} \quad \text{($\mathbb{R}^4$ column vector)} \\
 \dot{\mathbf{W}^1} & = \dot{\mathbf{z}_1}\mathbf{x}^\top \\
 \dot{\mathbf{b}^1} & = \dot{\mathbf{z}_1}
 \end{aligned}
