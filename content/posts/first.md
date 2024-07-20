@@ -3,7 +3,7 @@ title: "How to Build your Website Using Hugo on GitHub Pages: Summary "
 date: 2024-02-01T10:04:47+08:00
 draft: false
 ---
-## Update log
+## Updating log
 - 2024-07-17: Add steps for installing and updating the theme; update workflow
 
 Hugo is a fast and modern static site generator that makes building website much easier. With Hugo, you can host your beautiful website on GitHub Pages, Netlify or other platforms.
