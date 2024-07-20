@@ -5,7 +5,7 @@ draft: false
 ---
 
 <!-- <font color='green'>[Updated on 2024-07-17: Add steps for installing/updating the theme and update workflow.]</font> -->
-<span style="color:green"> [Updated on 2024-07-17: Add steps for installing/updating the theme and update workflow.] </span>.
+<span style="color:blue"> [Updated on 2024-07-17: Add steps for installing/updating the theme and update workflow.] </span>.
 
 Hugo is a fast and modern static site generator that makes building website much easier. With Hugo, you can host your beautiful website on GitHub Pages, Netlify or other platforms.
 ## Create a Hugo blog
