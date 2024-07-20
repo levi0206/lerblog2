@@ -280,7 +280,7 @@ Here, we can see the difference in efficiency between the two schemes more clear
 - In contrast, backpropagation traverses the graph only once and computes all the partial derivatives simultaneously.
 
 ## Example: Backpropagation on a Neural Network
-Suppose we perform a binary classification task using a neural network with three hidden layers. Let $x\in\mathbb{R}^4$ be a $4$-dimensional column vector. Assume the following:
+Suppose we perform a least square regression task using a neural network with three hidden layers. Let $x\in\mathbb{R}^4$ be a $4$-dimensional column vector. Assume the following:
 - The first hidden layer consists of 4 nodes.
 - The second hidden layer consists of 2 nodes.
 - A sigmoid function $\sigma$ is applied after the second hidden layer.
