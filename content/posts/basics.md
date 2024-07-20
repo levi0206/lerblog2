@@ -5,8 +5,8 @@ draft: false
 ShowToc: true
 ---
 
-## Update log
-- 2024-07-18: Use new code example
+<span style="color:green">Updated on 2024-07-18: Use new code example</span>.
+
 
 ## Outline
 In this post, we mention some important concepts in deep learning, including
